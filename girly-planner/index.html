@@ -11,6 +11,7 @@
 <link rel="icon" href="assets/icon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="assets/icon-180.png">
 <style>
+@font-face{font-family:'Birthstone';font-style:normal;font-weight:400;font-display:swap;src:url(assets/fonts/birthstone-latin-400-normal.woff2) format('woff2')}
 @font-face{font-family:'Caveat';font-style:normal;font-weight:400;font-display:swap;src:url(assets/fonts/caveat-latin-400-normal.woff2) format('woff2')}
 @font-face{font-family:'Caveat';font-style:normal;font-weight:600;font-display:swap;src:url(assets/fonts/caveat-latin-600-normal.woff2) format('woff2')}
 @font-face{font-family:'Dancing Script';font-style:normal;font-weight:600;font-display:swap;src:url(assets/fonts/dancing-script-latin-600-normal.woff2) format('woff2')}
@@ -56,7 +57,7 @@ button{font:inherit;color:inherit;cursor:pointer}
 a{color:inherit;text-decoration:none}
 /* ---------- barre du haut ---------- */
 #top{position:fixed;left:0;right:0;top:0;height:56px;padding:0 10px;padding-top:env(safe-area-inset-top);display:flex;align-items:center;gap:6px;background:rgba(255,248,250,.92);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-bottom:1px solid var(--uibd);z-index:50}
-.brand{font:700 22px 'Dancing Script';color:var(--deep);white-space:nowrap;padding:0 6px;border:0;background:none}
+.brand{font:400 22px 'Birthstone';color:var(--deep);white-space:nowrap;padding:0 6px;border:0;background:none}
 .tb{height:38px;min-width:38px;padding:0 10px;border-radius:11px;border:1px solid var(--uibd);background:var(--ui);display:inline-flex;align-items:center;justify-content:center;gap:6px;font-weight:600;font-size:14px;white-space:nowrap}
 .tb:disabled{opacity:.35;cursor:default}
 .tb.on{background:var(--deep);color:#fff;border-color:var(--deep)}
@@ -118,7 +119,7 @@ body.inkmode .ink{pointer-events:auto;cursor:crosshair}
 body.inkmode.eraser .ink{cursor:cell}
 /* ---------- éléments de modèle ---------- */
 .hd{display:flex;align-items:center;gap:10px;min-height:52px}
-.hd h1{font:700 40px/1 'Dancing Script';color:var(--deep);margin:0;white-space:nowrap}
+.hd h1{font:400 40px/1 'Birthstone';color:var(--deep);margin:0;white-space:nowrap}
 .hd .sub{font:600 14px Quicksand;color:var(--ink2)}
 .hd .sp{flex:1}
 .nv{width:32px;height:32px;border-radius:50%;background:var(--blush);display:inline-flex;align-items:center;justify-content:center;font-weight:700;color:var(--deep);flex:none}
@@ -163,7 +164,7 @@ body.inkmode.eraser .ink{cursor:cell}
 .mcal .cell .w{font-size:17px;line-height:19px;flex:1;min-height:19px;overflow:hidden}
 .hol{font:600 9.5px Quicksand;color:#b86a8c;line-height:1.1}
 .mini{display:flex;flex-direction:column;gap:3px}
-.mini h3{margin:0 0 2px;font:700 22px 'Dancing Script';color:var(--deep)}
+.mini h3{margin:0 0 2px;font:400 22px 'Birthstone';color:var(--deep)}
 .mini .g{display:grid;grid-template-columns:repeat(7,1fr);gap:1px;text-align:center;font:600 11.5px/21px Quicksand}
 .mini .g .h{color:var(--deep);font-weight:700;font-size:10px}
 .mini .g a{border-radius:6px}.mini .g a:hover{background:var(--rose2)}
@@ -237,7 +238,7 @@ body.inkmode.eraser .ink{cursor:cell}
 #stk{right:12px;top:66px;bottom:12px;width:min(420px,calc(100vw - 24px));border-radius:20px}
 @media (max-width:900px){#stk{left:0;right:0;width:auto;top:auto;bottom:0;height:62vh;border-radius:20px 20px 0 0}}
 .sh-h{display:flex;align-items:center;gap:8px;padding:12px 14px 8px}
-.sh-h h2{margin:0;font:700 26px 'Dancing Script';color:var(--deep);flex:1}
+.sh-h h2{margin:0;font:400 26px 'Birthstone';color:var(--deep);flex:1}
 .cats{display:flex;gap:6px;overflow-x:auto;padding:0 14px 8px;flex:none}
 .cat{flex:none;border:1px solid var(--uibd);background:#fff;border-radius:20px;padding:6px 12px;font-weight:700;font-size:12.5px}
 .cat.on{background:var(--deep);border-color:var(--deep);color:#fff}
@@ -264,7 +265,7 @@ body.inkmode.eraser .ink{cursor:cell}
 #modal{position:fixed;inset:0;z-index:90;display:none;align-items:center;justify-content:center;background:rgba(80,40,60,.3);padding:16px}
 #modal.on{display:flex}
 #modal .card{background:#fff;border-radius:20px;padding:20px;max-width:440px;width:100%;box-shadow:0 20px 50px rgba(80,40,60,.35)}
-#modal h3{margin:0 0 8px;font:700 26px 'Dancing Script';color:var(--deep)}
+#modal h3{margin:0 0 8px;font:400 26px 'Birthstone';color:var(--deep)}
 #modal p{margin:0 0 16px;line-height:1.5;font-size:15px}
 #modal .act{display:flex;gap:8px;justify-content:flex-end}
 #modal .card.help{max-width:560px;max-height:80vh;overflow:auto}
@@ -280,7 +281,7 @@ body.single #side{display:flex}
 @media (max-width:560px){#tools .lbl{display:none}#tools .tb{min-width:42px;padding:0 9px}}
 body.single #stage{top:104px}
 body.single #side{top:62px;bottom:auto}
-#busy{position:fixed;inset:0;z-index:99;background:rgba(255,250,252,.85);display:none;align-items:center;justify-content:center;font:700 28px 'Dancing Script';color:var(--deep)}
+#busy{position:fixed;inset:0;z-index:99;background:rgba(255,250,252,.85);display:none;align-items:center;justify-content:center;font:400 28px 'Birthstone';color:var(--deep)}
 #busy.on{display:flex}
 /* impression : la double page seule */
 @media print{
@@ -325,7 +326,7 @@ body.single #side{top:62px;bottom:auto}
 /* écriture manuscrite partout */
 .w{font:20px/30px var(--hand)}
 .row .w{font-size:19px}
-.hd h1{font:700 46px/1 'Dancing Script'}
+.hd h1{font:400 46px/1 'Birthstone'}
 .hd .sub,.mut,.tm{font-family:var(--hand)!important;font-weight:400!important}
 .tm{font-size:16px!important}
 .hd .sub{font-size:18px}
@@ -343,7 +344,7 @@ body.single #side{top:62px;bottom:auto}
 .deco{position:absolute;pointer-events:none;z-index:2;filter:drop-shadow(0 2px 2px rgba(120,60,80,.12))}
 .brushtitle{position:relative;isolation:isolate;padding:4px 30px 10px 18px;margin-left:-10px}
 .brushtitle::before{content:"";position:absolute;inset:18px 0 0 0;z-index:-1;background:#f7b3c8;-webkit-mask:url(assets/brush2.svg) 0 0/100% 100% no-repeat;mask:url(assets/brush2.svg) 0 0/100% 100% no-repeat}
-.brushtitle .s{font:700 44px/1 'Dancing Script';color:var(--ink);display:block}
+.brushtitle .s{font:400 44px/1 'Birthstone';color:var(--ink);display:block}
 .brushtitle .b{font:400 34px/1 var(--hand);letter-spacing:.06em;color:var(--ink);display:block;margin-top:4px}
 .sticky{position:relative;background:#fbe9c4;padding:20px 18px 14px;box-shadow:0 6px 12px rgba(120,80,60,.18);border-radius:3px}
 .sticky::before{content:"";position:absolute;left:50%;top:-11px;width:96px;height:24px;margin-left:-48px;background:rgba(244,170,195,.72);transform:rotate(-4deg);-webkit-mask:url(assets/brush.svg) 0 0/100% 100%;mask:url(assets/brush.svg) 0 0/100% 100%}
@@ -367,12 +368,12 @@ body.single #side{top:62px;bottom:auto}
 .mcal .cell .n{font:400 16px var(--hand)}
 .mcal .cell.we{background:color-mix(in srgb,var(--rose) 14%,#fff)}
 .mcal .wk{font:400 12px var(--hand)}
-.mini h3{font:700 24px 'Dancing Script'}
+.mini h3{font:400 24px 'Birthstone'}
 .pick{display:flex;gap:6px}.pick button{border:0;background:none;padding:0;font-size:22px;line-height:1;filter:grayscale(1) opacity(.45);transition:.15s}.pick button.on{filter:none;transform:scale(1.15)}
 .elastic{position:absolute;top:0;bottom:0;right:46px;width:20px;z-index:3;pointer-events:none;background:linear-gradient(90deg,#d9668f,#f29abb 45%,#c9567f);box-shadow:-2px 0 4px rgba(90,20,50,.3),2px 0 4px rgba(90,20,50,.2)}
 .sig .tag{font:400 38px/1.05 var(--hand)}
 .sig .mani{position:absolute;left:40px;bottom:100px;font:400 30px/1.15 var(--hand);color:#1f1a1c;transform:rotate(-6deg);z-index:2}
-.sig .studio{font:700 78px/1 'Dancing Script';color:#e2457f;background:#ffd3e2;padding:2px 26px 10px;transform:rotate(-4deg);box-shadow:2px 3px 0 rgba(0,0,0,.2);margin-top:4px}
+.sig .studio{font:400 78px/1 'Birthstone';color:#e2457f;background:#ffd3e2;padding:2px 26px 10px;transform:rotate(-4deg);box-shadow:2px 3px 0 rgba(0,0,0,.2);margin-top:4px}
 .cth{aspect-ratio:.8}
 .hab .w:empty::before,.sticky .w:empty::before,.wday .w:empty::before{color:var(--ink2);opacity:.85}
 .sticky .w:empty::before{color:var(--ink)}
@@ -449,6 +450,11 @@ body.single #side{top:62px;bottom:auto}
 .lrow .lname{flex:1;text-align:left;display:flex;flex-direction:column;font-weight:700;font-size:14px}
 .lrow .lname small{font-weight:500;color:var(--ink2);font-size:12px}
 .lp{width:42px;height:42px;border-radius:8px;background:#fdf3f6 center/contain no-repeat;flex:none;display:flex;align-items:center;justify-content:center;font-size:20px}
+
+/* titres en Birthstone : un peu plus grands */
+.hd h1{font-size:54px}.brushtitle .s{font-size:50px}.mini h3{font-size:27px}.ictitle{font-size:28px}.sh-h h2,#modal h3{font-size:30px}.brand{font-size:25px}.sig .studio{font-size:86px}
+.hd h1,.brushtitle .s,.mini h3,.brand,.ictitle,.sh-h h2,#modal h3,.sig .studio{-webkit-text-stroke:.9px currentColor;paint-order:stroke fill}
+.brand{-webkit-text-stroke:.5px currentColor}
 </style>
 </head>
 <body>
@@ -675,7 +681,7 @@ month(a){const d0=parseYM(a);const y=d0.getFullYear(),m=d0.getMonth();CTX.date=D
   const gR=`<div class="mcal" style="flex:0 0 190px;height:722px;grid-template-columns:1fr 1fr;grid-template-rows:auto repeat(${R},1fr)">${H.slice(5).map(h=>`<span class="dh">${h}</span>`).join('')}${[...Array(R)].map((_,r)=>cells.slice(r*7+5,r*7+7).map(cell).join('')).join('')}</div>`;
   const nd=new Date(y,m+1,0).getDate();
   const hab=[0,1,2,3].map(h=>`<div style="margin-bottom:4px">${O('hn'+h,['Eau','Sport','Lecture','Skincare'][h],'" style="font-size:18px;height:26px;line-height:26px')}<div style="display:flex;gap:3px;flex-wrap:wrap">${[...Array(nd)].map((_,i)=>`<button class="dot" style="width:13px;height:13px;--dc:${DC[h]}" data-f="h${h}-${i+1}" data-t="ck" title="${i+1}"></button>`).join('')}</div></div>`).join('');
-  return {title:`${MOIS[m]} ${y}`,sec:'month',L:{pid:pid+':L',html:`${HD(`${MOIS[m]} ${y}`,'',nvA(p,-1),nvA(n,1))}${DECO('125','left:300px;top:20px;width:44px;transform:rotate(10deg)')}${gL}`},
+  return {title:`${MOIS[m]} ${y}`,sec:'month',L:{pid:pid+':L',html:`${HD(`${MOIS[m]} ${y}`,'',nvA(p,-1),nvA(n,1))}${gL}`},
    R:{pid:pid+':R',html:`<div class="hd"><span class="sp"></span><a class="chip" href="#/habits/${ym(y,m)}">Habitudes</a><a class="chip" href="#/finance/${ym(y,m)}">Budget</a></div>${DECO('126','right:250px;top:14px;width:46px')}
    <div class="row2" style="flex:none;height:722px">${gR}<div class="col">${BOX('Objectifs du mois',ROWS('ob',5,'Ce que je veux accomplir'),'#f9c9d6','flex:none')}${BOX('Suivi habitudes',hab,'#dccdf0','flex:none')}<div class="box fx" style="--c:#fbd9c6"><span class="lab">Notes</span>${LINES('notes','')}</div></div></div>`}}},
 week(a){let m=a?parse(a):mondayOf(ctxDate());m=mondayOf(m);const key=ymd(m);const days=weekDays(key);CTX.date=inRange(days[3])?days[3]:days.find(inRange)||D(Y0,0,1);
@@ -838,8 +844,9 @@ function calc(el){const pid=el.dataset.pid;const d=doc(pid).f;
 
 /* ---------------- Mise à l'échelle ---------------- */
 let SCALE=1;
-function isSingle(){const v=S().view;if(v==='double')return false;if(v==='simple')return true;const st=$('#stage');const w=st.clientWidth||innerWidth,h=st.clientHeight||innerHeight;if(Math.min(innerWidth,screen.width||innerWidth)<=600)return true;return w/h<1.05}
-function placeTools(){const t=$('#tools'),narrow=innerWidth<=900;if(narrow&&t.parentNode.id==='top')document.body.append(t);else if(!narrow&&t.parentNode.id!=='top')$('#top').insertBefore(t,$('#bMenu'))}
+function isPhone(){const sw=Math.min(screen.width||9999,screen.height||9999);return sw<=600||Math.min(innerWidth,innerHeight)<=500}
+function isSingle(){if(isPhone())return true;const v=S().view;if(v==='double')return false;if(v==='simple')return true;const st=$('#stage');const w=st.clientWidth||innerWidth,h=st.clientHeight||innerHeight;return w/h<1.05}
+function placeTools(){const t=$('#tools'),narrow=matchMedia('(max-width:900px)').matches||isPhone();if(narrow&&t.parentNode.id==='top')document.body.append(t);else if(!narrow&&t.parentNode.id!=='top')$('#top').insertBefore(t,$('#bMenu'))}
 function fit(){placeTools();const st=$('#stage'),bk=$('#book');const single=isSingle();bk.classList.toggle('single',single);document.body.classList.toggle('single',single);
   if(single){const side=CUR&&CUR.showR?'R':'L';bk.classList.toggle('showR',side==='R');$$('#side button').forEach(b=>b.classList.toggle('on',b.dataset.side===side))}
   const W=single?648:1416,Hh=single?888:928;const pad=single?10:16;
@@ -927,7 +934,7 @@ function placeObjbar(){const bar=$('#objbar');const e=selEl();const o=selObj();i
   if(txt&&!emo)$('[data-o="color"]',bar).style.color=o.type==='note'?(o.bg||'#fde9b4'):(o.color||'#4a3640');
   bar.classList.add('on');const r=e.getBoundingClientRect();const bw=bar.offsetWidth,bh=bar.offsetHeight;
   let x=r.left+r.width/2-bw/2,y=r.top-bh-48*SCALE-8;if(y<62)y=r.bottom+14;x=clamp(x,6,innerWidth-bw-6);y=clamp(y,62,innerHeight-bh-70);bar.style.left=x+'px';bar.style.top=y+'px'}
-const FONTS=['Patrick Hand','Caveat','Dancing Script','Pacifico','Great Vibes','Sacramento','Satisfy','Homemade Apple','Courgette','Lobster','Indie Flower','Shadows Into Light','Kalam','Gloria Hallelujah','Amatic SC','Permanent Marker','Quicksand','Poppins','Comfortaa','Playfair Display','Archivo Black'];
+const FONTS=['Patrick Hand','Caveat','Birthstone','Dancing Script','Pacifico','Great Vibes','Sacramento','Satisfy','Homemade Apple','Courgette','Lobster','Indie Flower','Shadows Into Light','Kalam','Gloria Hallelujah','Amatic SC','Permanent Marker','Quicksand','Poppins','Comfortaa','Playfair Display','Archivo Black'];
 let FONTTARGET=null;
 function openFonts(target){FONTTARGET=target;const cur=target==='pages'?(S().hand||'Patrick Hand'):((selObj()||{}).font||'Caveat');
   openSheet('#fonts',`<div class="sh-h"><h2>Polices</h2><button class="tb" data-close>✕</button></div><p class="mut" style="margin:0 14px 8px">${target==='pages'?'Police d’écriture de toutes les lignes de l’agenda':'Police du texte sélectionné'}</p>
