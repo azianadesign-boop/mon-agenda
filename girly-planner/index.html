@@ -462,6 +462,14 @@ body.single #side{top:62px;bottom:auto}
 .q.pq:hover{filter:drop-shadow(0 4px 6px rgba(120,60,80,.28));transform:translateY(-2px)}
 .qgrid{gap:6px 8px}
 .drop svg{stroke-linejoin:round;stroke-linecap:round}.drop .lid{fill:#e8f1fb}.drop.f .cup{fill:#b9d6f6}.drop.f .lid{fill:#9fc2ea}
+
+.pbg{position:absolute;inset:0;z-index:0;background:center/cover no-repeat;pointer-events:none;display:none}
+#fondsheet{right:12px;top:66px;bottom:12px;width:min(440px,calc(100vw - 24px));border-radius:20px}
+@media (max-width:900px){#fondsheet{left:0;right:0;width:auto;top:auto;bottom:0;height:66vh;border-radius:20px 20px 0 0}}
+.fgrid2{flex:1;overflow-y:auto;display:grid;grid-template-columns:repeat(3,1fr);gap:8px;padding:0 14px 6px;align-content:start}
+.fth{aspect-ratio:.72;border:3px solid transparent;border-radius:12px;background:#fff center/cover;position:relative;overflow:hidden;box-shadow:0 2px 6px rgba(120,70,90,.18)}
+.fth span{position:absolute;left:0;right:0;bottom:0;background:rgba(255,255,255,.85);font:700 11.5px Quicksand;padding:4px}
+.fth.on{border-color:var(--deep)}
 </style>
 </head>
 <body>
@@ -517,6 +525,7 @@ body.single #side{top:62px;bottom:auto}
 <aside class="sheet" id="fonts" aria-label="Polices"></aside>
 <aside class="sheet" id="emoji" aria-label="Emojis"></aside>
 <aside class="sheet" id="layers" aria-label="Calques"></aside>
+<aside class="sheet" id="fondsheet" aria-label="Fond de page"></aside>
 <aside class="sheet" id="nav" aria-label="Sommaire"></aside>
 <div id="modal"><div class="card"></div></div>
 <div id="toast"></div>
@@ -606,7 +615,7 @@ function redo(){const e=H.r.pop();if(!e)return;H.u.push(e);deselect();applyHist(
 
 /* ---------------- Assets ---------------- */
 let MAN={covers:[],stickers:[]};
-const CATS=[['all','Tous'],['girly','Girly pop'],['cozy','Cozy'],['planner','Daily planner'],['papiers','Notes & washi'],['icones','Icônes roses'],['icones2','Icônes pastel'],['motifs','Motifs léopard'],['illustres','Illustrés'],['decoration','Déco'],['lifestyle','Lifestyle'],['etiquettes','Étiquettes & washi'],['papeterie','Papeterie'],['navigation','Navigation'],['voyage','Voyage'],['cadres','Cadres photo'],['mine','Mes stickers']];
+const CATS=[['all','Tous'],['images','Images 4K'],['girly','Girly pop'],['cozy','Cozy'],['planner','Daily planner'],['papiers','Notes & washi'],['icones','Icônes roses'],['icones2','Icônes pastel'],['motifs','Motifs léopard'],['illustres','Illustrés'],['decoration','Déco'],['lifestyle','Lifestyle'],['etiquettes','Étiquettes & washi'],['papeterie','Papeterie'],['navigation','Navigation'],['voyage','Voyage'],['cadres','Cadres photo'],['mine','Mes stickers']];
 let SVGB={};const SVGC={};
 function atlStyle(key){const a=MAN.atlas&&MAN.atlas[key];if(!a)return '';const [n,x,y,w,h]=a,[AW,AH]=MAN.atlasSize;return `background-image:url(assets/atlas/atlas_${n}.webp);background-repeat:no-repeat;background-size:${AW/w*100}% ${AH/h*100}%;background-position:${AW===w?0:x/(AW-w)*100}% ${AH===h?0:y/(AH-h)*100}%`}
 const svgURL=p=>{if(!p||!SVGB[p])return p;return SVGC[p]||(SVGC[p]='data:image/svg+xml;charset=utf-8,'+encodeURIComponent(SVGB[p]))};
@@ -816,7 +825,7 @@ function renderSpread(){const sp=CUR;$('#ptitle').textContent=sp.title;document.
     const tpl=document.createElement('div');tpl.className='tpl';if(def.bare)tpl.style.padding='0';tpl.innerHTML=def.html;
     const objs=document.createElement('div');objs.className='objs';const objsB=document.createElement('div');objsB.className='objsB';
     const ink=document.createElement('canvas');ink.className='ink';const live=document.createElement('canvas');live.className='inklive';
-    el.append(objsB,tpl,objs,ink,live);renderPage(el,true)}
+    const pbg=document.createElement('div');pbg.className='pbg';el.append(pbg,objsB,tpl,objs,ink,live);renderPage(el,true)}
   renderTabs();fit();}
 function pageEl(pid){return $$('.page').find(p=>p.dataset.pid===pid)||null}
 function renderPage(el,fresh){const pid=el.dataset.pid;const d=doc(pid);
@@ -825,6 +834,7 @@ function renderPage(el,fresh){const pid=el.dataset.pid;const d=doc(pid);
     if(t==='ck'||t==='cyc')f.dataset.v=v||0;else if(t==='pick')$$('[data-j]',f).forEach(b=>b.classList.toggle('on',Number(b.dataset.j)===Number(v)));else if(t==='rate')$$('[data-j]',f).forEach(b=>{const on=Number(b.dataset.j)<=(Number(v)||0);b.dataset.v=on?1:0;b.classList.toggle('f',on)});
     else if(document.activeElement!==f)f.textContent=v||''});
   $$('[data-slot]',el).forEach(async s=>{const v=d.f['slot:'+s.dataset.slot];s.classList.toggle('has',!!v);s.style.backgroundImage=v?`url('${await Store.url(v)}')`:''});
+  {const pb=$('.pbg',el);if(pb){const F=(MAN.fonds||[]).find(x=>x.id===d.f.bg);pb.style.backgroundImage=F&&F.bg?`url(${F.bg})`:'';pb.style.opacity=d.f.bgop??.45;pb.style.display=F?'block':'none'}}
   calc(el);renderObjs(el);drawInk(el);
   if(CUR&&CUR.samePid&&!fresh){const o=$$('.page').find(p=>p!==el&&p.dataset.pid===pid);if(o){$$('[data-f]',o).forEach(f=>{if(f.dataset.t)return;if(document.activeElement!==f)f.textContent=d.f[f.dataset.f]||''})}}
 }
@@ -1059,10 +1069,10 @@ function drawStk(){$('#cats').innerHTML=CATS.map(([k,l])=>`<button class="cat ${
   if(STKCAT==='mine'){const l=Store.get('mystk',[]);g.innerHTML=l.length?'':'<p class="mut" style="grid-column:1/-1">Importez vos propres PNG transparents avec « Importer PNG ». Ils restent sur cet appareil.</p>';l.forEach(async s=>{const b=document.createElement('button');b.className='st';b.innerHTML=`<img alt="" src="${await Store.url(s.id)}">`;b.onclick=()=>{addObj({type:'img',src:'blob:'+s.id,ar:s.ar});toast('Sticker ajouté ♡',1200)};g.append(b)});return}
   let list=MAN.stickers.filter(s=>(STKCAT==='all'||s.cat===STKCAT)&&(!q||s.name.normalize('NFD').replace(/[̀-ͯ]/g,'').includes(q)||s.cat.includes(q)));
   const lim=STKLIM;const more=list.length>lim;list=list.slice(0,lim);
-  g.innerHTML=list.map((s,i)=>`<button class="st" data-i="${MAN.stickers.indexOf(s)}" title="${esc(s.name)}">${s.atl?`<span class="spr2" style="background-position:${-(s.sp2%MAN.sprite2Cols)*72}px ${-Math.floor(s.sp2/MAN.sprite2Cols)*72}px;background-size:${MAN.sprite2Cols*72}px ${MAN.sprite2Rows*72}px" role="img" aria-label="${esc(s.name)}"></span>`:s.sp!=null?`<span class="spr" style="background-position:${-(s.sp%MAN.spriteCols)*72}px ${-Math.floor(s.sp/MAN.spriteCols)*72}px;background-size:${MAN.spriteCols*72}px ${MAN.spriteRows*72}px" role="img" aria-label="${esc(s.name)}"></span>`:`<img loading="lazy" decoding="async" alt="${esc(s.name)}" src="${svgURL(s.src)}">`}</button>`).join('')||'<p class="mut" style="grid-column:1/-1">Aucun sticker trouvé.</p>';if(more)g.insertAdjacentHTML('beforeend','<button class="tb" data-more style="grid-column:1/-1">Voir plus de stickers</button>')}
+  g.innerHTML=list.map((s,i)=>`<button class="st" data-i="${MAN.stickers.indexOf(s)}" title="${esc(s.name)}">${s.atl?`<span class="spr2" style="background-position:${-(s.sp2%MAN.sprite2Cols)*72}px ${-Math.floor(s.sp2/MAN.sprite2Cols)*72}px;background-size:${MAN.sprite2Cols*72}px ${MAN.sprite2Rows*72}px" role="img" aria-label="${esc(s.name)}"></span>`:s.sp!=null?`<span class="spr" style="background-position:${-(s.sp%MAN.spriteCols)*72}px ${-Math.floor(s.sp/MAN.spriteCols)*72}px;background-size:${MAN.spriteCols*72}px ${MAN.spriteRows*72}px" role="img" aria-label="${esc(s.name)}"></span>`:`<img loading="lazy" decoding="async" alt="${esc(s.name)}" src="${svgURL(s.thumb||s.src)}">`}</button>`).join('')||'<p class="mut" style="grid-column:1/-1">Aucun sticker trouvé.</p>';if(more)g.insertAdjacentHTML('beforeend','<button class="tb" data-more style="grid-column:1/-1">Voir plus de stickers</button>')}
 $('#cats').onclick=e=>{const b=e.target.closest('[data-k]');if(b){STKCAT=b.dataset.k;STKLIM=60;drawStk()}};
 $('#stkq').oninput=()=>{STKLIM=60;drawStk()};
-$('#stkgrid').onclick=e=>{if(e.target.closest('[data-more]')){STKLIM+=60;drawStk();return}const b=e.target.closest('[data-i]');if(!b)return;const s=MAN.stickers[b.dataset.i];const big=s.cat==='etiquettes'||s.cat==='cadres';if(s.atl){const W={papiers:250,motifs:300,icones:90,icones2:90,planner:150}[s.cat]||150;addObj({type:'img',src:'atl:'+s.atl,ar:s.ar,w:W})}else addObj({type:'img',src:s.src,ar:s.ar,w:big?230:(s.cat==='illustres'?150:120)});toast('Sticker ajouté ♡',1200)};
+$('#stkgrid').onclick=e=>{if(e.target.closest('[data-more]')){STKLIM+=60;drawStk();return}const b=e.target.closest('[data-i]');if(!b)return;const s=MAN.stickers[b.dataset.i];const big=s.cat==='etiquettes'||s.cat==='cadres';if(s.cat==='images'){addObj({type:'img',src:s.src,ar:s.ar,w:s.ar>1?420:300})}else if(s.atl){const W={papiers:250,motifs:300,icones:90,icones2:90,planner:150}[s.cat]||150;addObj({type:'img',src:'atl:'+s.atl,ar:s.ar,w:W})}else addObj({type:'img',src:s.src,ar:s.ar,w:big?230:(s.cat==='illustres'?150:120)});toast('Sticker ajouté ♡',1200)};
 
 /* ---------------- Menus ---------------- */
 function closeSheets(){setTimeout(placeObjbar,0);const g=document.getElementById('stkgrid');if(g&&document.getElementById('stk').classList.contains('on'))g.innerHTML='';$$('.sheet').forEach(s=>s.classList.remove('on'));$('#veil').classList.remove('on')}
@@ -1077,6 +1087,7 @@ $('#bAdd').onclick=()=>{const single=isSingle();const side=single?(CUR.showR?'R'
   <button class="mi" data-add="txt"><span class="e">T</span>Texte libre</button>
   <button class="mi" data-add="note"><span class="e">🗒</span>Note adhésive</button>
   <button class="mi" data-add="emoji"><span class="e">😊</span>Emoji</button>
+  <button class="mi" data-add="fond"><span class="e">🖼</span>Fond de page (image)</button>
   <button class="mi" data-add="layers"><span class="e">☰</span>Calques de la page</button>
   <p class="mut" style="padding:4px 12px 6px;margin:0">Vos photos restent privées : elles sont enregistrées uniquement sur cet appareil.</p>`);
   if(innerWidth>900){$('#addmenu').style.left=Math.min(r.left,innerWidth-310)+'px'}};
@@ -1085,7 +1096,7 @@ $('#addmenu').onclick=e=>{const sd=e.target.closest('[data-side]');if(sd){ACTIVE
   if(k==='photo')$('#fPhoto').click();if(k==='stk')openStk();
   if(k==='txt')addObj({type:'txt',text:'',fs:34,w:260,h:70,color:'#c4547f'});
   if(k==='note')addObj({type:'note',text:'',fs:26,w:200,h:180,bg:'#fde9b4',r:-2});
-  if(k==='emoji')openEmoji();if(k==='layers')openLayers(activePage().dataset.pid)};
+  if(k==='emoji')openEmoji();if(k==='fond')openFonds(activePage().dataset.pid);if(k==='layers')openLayers(activePage().dataset.pid)};
 $('#bMenu').onclick=()=>{const s=S();
   const seg=(k,opts)=>`<div class="seg">${opts.map(([v,l])=>`<button data-set="${k}" data-v="${v}" class="${String(s[k])===String(v)?'on':''}">${l}</button>`).join('')}</div>`;
   openSheet('#menu',`<div class="mh">Affichage</div>${seg('view',[['auto','Auto'],['double','Double page'],['simple','Page simple']])}
@@ -1148,6 +1159,18 @@ $('#layers').addEventListener('click',e=>{const b=e.target.closest('[data-l]');i
     if(k==='layer')o.layer=o.layer==='back'?'front':'back';if(k==='hide')o.hidden=!o.hidden;if(k==='lock')o.lock=!o.lock;
     if(k==='up'&&i<d.o.length-1){d.o.splice(i,1);d.o.splice(i+1,0,o)}if(k==='down'&&i>0){d.o.splice(i,1);d.o.splice(i-1,0,o)}});
   if(pg)renderObjs(pg);drawLayers()});
+
+/* ---------------- Fond de page ---------------- */
+let FONDPID=null;
+function openFonds(pid){FONDPID=pid;openSheet('#fondsheet','');drawFonds()}
+function drawFonds(){const d=doc(FONDPID);const cur=d.f.bg||'';const op=d.f.bgop??.45;
+  $('#fondsheet').innerHTML=`<div class="sh-h"><h2>Fond de page</h2><button class="tb" data-close>✕</button></div>
+  <p class="mut" style="margin:0 14px 8px">L’image couvre toute la page. Baisse l’intensité pour écrire facilement par-dessus.</p>
+  <div class="fgrid2"><button class="fth ${cur?'':'on'}" data-fond=""><span>Aucun</span></button>${(MAN.fonds||[]).filter(f=>f.bg).map(f=>`<button class="fth ${cur===f.id?'on':''}" data-fond="${f.id}" style="background-image:url(${f.thumb})" title="${esc(f.name)}"><span>${esc(f.name)}</span></button>`).join('')}</div>
+  <div class="mh">Intensité</div><div class="seg">${[[1,'100 %'],[.7,'70 %'],[.45,'45 %'],[.25,'25 %'],[.12,'12 %']].map(([v,l])=>`<button data-op="${v}" class="${Math.abs(op-v)<.01?'on':''}">${l}</button>`).join('')}</div>
+  <p class="mut" style="margin:4px 14px 14px">Le Paris rose détouré est dans Stickers → Images 4K.</p>`}
+$('#fondsheet').addEventListener('click',e=>{const f=e.target.closest('[data-fond]'),o=e.target.closest('[data-op]');if(!f&&!o)return;
+  mutate(FONDPID,d=>{if(f){if(f.dataset.fond)d.f.bg=f.dataset.fond;else delete d.f.bg}if(o)d.f.bgop=Number(o.dataset.op)});const pg=pageEl(FONDPID);pg&&renderPage(pg);drawFonds()});
 /* ---------------- Dialogues ---------------- */
 function ask(msg,ok='OK'){return new Promise(res=>{const m=$('#modal');$('.card',m).className='card';$('.card',m).innerHTML=`<h3>Confirmer</h3><p>${esc(msg)}</p><div class="act"><button class="tb" data-r="0">Annuler</button><button class="tb on" data-r="1">${esc(ok)}</button></div>`;m.classList.add('on');
   m.onclick=e=>{const b=e.target.closest('[data-r]');if(b||e.target===m){m.classList.remove('on');res(!!(b&&b.dataset.r==='1'))}}})}
