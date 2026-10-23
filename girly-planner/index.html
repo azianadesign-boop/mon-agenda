@@ -457,6 +457,10 @@ body.single #side{top:62px;bottom:auto}
 .brand{-webkit-text-stroke:.5px currentColor}
 .obj .atl{width:100%;height:100%;pointer-events:none}
 .spr2{display:block;width:72px;height:72px;background-image:url(assets/stickers/sprite2.webp);background-repeat:no-repeat}
+.q.pq{background:transparent center/100% 100% no-repeat;border-radius:0;padding:22px 4px 8px;min-height:90px;justify-content:center;filter:drop-shadow(0 2px 3px rgba(120,60,80,.18))}
+.q.pq img{width:34px;height:34px;object-fit:contain}
+.q.pq:hover{filter:drop-shadow(0 4px 6px rgba(120,60,80,.28));transform:translateY(-2px)}
+.qgrid{gap:6px 8px}
 </style>
 </head>
 <body>
@@ -657,10 +661,10 @@ cover(){const s=S();const cv=s.cover;
    <a class="chip" href="#/home" style="align-self:flex-end">Ouvrir le planner ›</a>`},
   R:{pid:'cover:R:'+cv,html:cv==='signature'?sigCover():`<img class="coverimg" src="${(MAN.covers.find(c=>c.id===cv)||{}).src||''}" alt="Couverture"><i class="elastic"></i>`,bare:true}}},
 home(){const t=today(),d=inRange(t)?t:D(Y0,0,1);const y=d.getFullYear(),m=d.getMonth();
-  const qs=[['Année',`#/year/${y}`,'calendrier_rose','#fbd3e0'],['Mois',`#/month/${ym(y,m)}`,'calendrier_pastel','#fbd9c6'],['Semaine',`#/week/${weekKeyFor(d)}`,'checklist_rose','#dccdf0'],['Jour',`#/day/${ymd(d)}`,'horloge_rose','#cdebdc'],
-   ['Finances',`#/finance/${ym(y,m)}`,'sac_shopping_rose','#dccdf0'],['Santé',`#/health/${ym(y,m)}`,'coeur_rose','#cdebdc'],['Bien-être',`#/habits/${ym(y,m)}`,'fleur_rose','#dfe8c9'],['Carnets','#/nb','carnet_rose','#fde9b4'],
-   ['Objectifs',`#/goals/${y}`,'etoile_rose','#d3e3f7'],['Projets','#/project/1','ordinateur_rose','#fde0cf'],['Voyages','#/travel/1','avion_rose','#d4efe3'],['Souvenirs','#/album/1','appareil_photo_rose','#fbd3e0'],
-   ['Vision',`#/vision/${y}`,'arc_en_ciel_rose','#e5d8f5'],['Journal','#/journal/1','livre_rose','#fbd9c6'],['Stickers','#stickers','papillon_rose','#cdebdc'],['Couverture','#/cover','noeud_rose','#fde9b4']];
+  const qs=[['Année',`#/year/${y}`,'annee','01'],['Mois',`#/month/${ym(y,m)}`,'mois','02'],['Semaine',`#/week/${weekKeyFor(d)}`,'semaine','03'],['Jour',`#/day/${ymd(d)}`,'jour','04'],
+   ['Finances',`#/finance/${ym(y,m)}`,'finances','06'],['Santé',`#/health/${ym(y,m)}`,'sante','11'],['Bien-être',`#/habits/${ym(y,m)}`,'bienetre','14'],['Carnets','#/nb','carnets','08'],
+   ['Objectifs',`#/goals/${y}`,'objectifs','07'],['Projets','#/project/1','projets','10'],['Voyages','#/travel/1','voyages','04'],['Souvenirs','#/album/1','souvenirs','05'],
+   ['Vision',`#/vision/${y}`,'vision','15'],['Journal','#/journal/1','journal','12'],['Stickers','#stickers','stickers','13'],['Couverture','#/cover','couverture','09']];
   return {title:'Accueil',sec:'home',
   L:{pid:'home:L',html:`<div class="hd" style="min-height:120px"><div class="brushtitle"><span class="s">Bienvenue ♡</span><span class="b">GIRLY PLANNER STUDIO</span></div></div>
    ${DECO('113','right:40px;top:26px;width:70px;transform:rotate(8deg)')}
@@ -668,8 +672,8 @@ home(){const t=today(),d=inRange(t)?t:D(Y0,0,1);const y=d.getFullYear(),m=d.getM
      <div class="sticky" style="transform:rotate(-3deg);background:#fbd5df;margin:14px 8px 0">${T('dream','Créer la vie de mes rêves')}</div>
      ${DECO('125','left:60px;bottom:40px;width:56px;transform:rotate(-12deg)')}</div>
    <div class="col">${BOX('Mes 3 priorités',NROWS('pri',3),'#f9c9d6','flex:none')}<div class="box fx" style="--c:#f9c9d6"><span class="lab">To do aujourd’hui</span>${ROWS('td',9,'')}</div></div></div>`},
-  R:{pid:'home:R',html:`<div style="display:flex;justify-content:flex-end;padding:6px 6px 0"><div class="sticky" style="width:340px;transform:rotate(3deg)">${T('quote','Une vie organisée est une vie plus libre')}</div></div>
-   <div class="box" style="--c:#f9c9d6;flex:none"><span class="lab">Accès rapides</span><div class="qgrid">${qs.map(([n,h,ic,c])=>`<a class="q" href="${h}" style="--c:${c}"><img src="${icon(ic)}" alt="">${n}</a>`).join('')}</div></div>
+  R:{pid:'home:R',html:`<div style="display:flex;justify-content:flex-end;padding:2px 6px 0"><div class="sticky" style="width:340px;transform:rotate(3deg);padding:16px 18px 8px">${T('quote','Une vie organisée est une vie plus libre')}</div></div>
+   <div class="box" style="--c:#f9c9d6;flex:none"><span class="lab">Accès rapides</span><div class="qgrid">${qs.map(([n,h,ic,pi],i)=>`<a class="q pq" href="${h}" style="background-image:url(assets/postits/postit_${pi}.webp);transform:rotate(${[-2,1.5,-1,2,1,-1.5,2,-2,1.5,-1,-2,1,2,-1.5,1,-1][i]}deg)"><img src="assets/qicons/${ic}.webp" alt="">${n}</a>`).join('')}</div></div>
    <div class="box fx" style="--c:#dccdf0"><span class="lab">Mes habitudes</span>${HAB('hh',['Sport','Eau','Lecture','Skincare','Gratitude'],7,dayHeads())}
      <div style="display:flex;gap:6px;flex-wrap:wrap;margin-top:auto">${YEARS.map(Y=>`<a class="chip" href="#/year/${Y}">${Y}</a>`).join('')}</div></div>
    ${DECO('124','right:36px;bottom:30px;width:120px;transform:rotate(6deg)')}`}}},
