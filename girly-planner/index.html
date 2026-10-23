@@ -461,6 +461,7 @@ body.single #side{top:62px;bottom:auto}
 .q.pq img{width:34px;height:34px;object-fit:contain}
 .q.pq:hover{filter:drop-shadow(0 4px 6px rgba(120,60,80,.28));transform:translateY(-2px)}
 .qgrid{gap:6px 8px}
+.drop svg{stroke-linejoin:round;stroke-linecap:round}.drop .lid{fill:#e8f1fb}.drop.f .cup{fill:#b9d6f6}.drop.f .lid{fill:#9fc2ea}
 </style>
 </head>
 <body>
@@ -618,7 +619,7 @@ const CK=k=>`<button class="ck" data-f="${k}" data-t="ck" aria-label="Cocher"></
 const DOT=(k,cls='')=>`<button class="dot ${cls}" data-f="${k}" data-t="ck" aria-label="Pointer"></button>`;
 const MOOD=k=>`<button class="dot m" data-f="${k}" data-t="cyc" data-n="6" aria-label="Humeur"></button>`;
 const RATE=(k,n=10)=>`<span class="rate" data-f="${k}" data-t="rate">${[...Array(n)].map((_,i)=>`<button class="dot" data-j="${i+1}" aria-label="${i+1}"></button>`).join('')}</span>`;
-const DROPS=(k,n=8)=>`<span class="rate drops" data-f="${k}" data-t="rate">${[...Array(n)].map((_,i)=>`<button class="drop" data-j="${i+1}" aria-label="Verre ${i+1}"><svg viewBox="0 0 20 24"><path d="M10 2C6 8 3 11 3 15a7 7 0 0 0 14 0c0-4-3-7-7-13z"/></svg></button>`).join('')}</span>`;
+const DROPS=(k,n=8)=>`<span class="rate drops" data-f="${k}" data-t="rate">${[...Array(n)].map((_,i)=>`<button class="drop" data-j="${i+1}" aria-label="Verre ${i+1}"><svg viewBox="0 0 20 24"><path class="cup" d="M3.5 7.5h13l-1.6 14a1.6 1.6 0 0 1-1.6 1.4H6.7a1.6 1.6 0 0 1-1.6-1.4z"/><path class="lid" d="M2.5 5.2h15v2.3h-15z"/><path class="straw" d="M11.5 5.2 13 1.2h2.6" fill="none"/></svg></button>`).join('')}</span>`;
 const BOX=(lab,inner,c='',st='')=>`<div class="box" style="${c?`--c:${c};`:''}${st}"><span class="lab">${lab}</span>${inner}</div>`;
 const DC=['#f4a6c0','#fbc98e','#a9dcc3','#9fc9ef','#cdb3ec','#f7b3a1','#e6d27a'];
 const NC=['#fde0c4','#f9c9d3','#f6b6c8'];
