@@ -460,6 +460,9 @@ body.single #side{top:62px;bottom:auto}
 .q.pq img{width:34px;height:34px;object-fit:contain}
 .q.pq:hover{filter:drop-shadow(0 4px 6px rgba(120,60,80,.28));transform:translateY(-2px)}
 .qgrid{gap:6px 8px}
+.sigaz{position:absolute!important;left:250px;bottom:26px;width:150px;z-index:3;transform:rotate(-6deg);filter:none!important}
+.sigaz.on-img{left:auto;right:80px;bottom:30px;background:rgba(255,250,246,.82);padding:6px 14px;border-radius:12px;width:170px}
+.sighome{position:relative;align-self:center;margin:auto 0 70px;width:170px;opacity:.9;transform:rotate(-4deg);pointer-events:none}
 </style>
 </head>
 <body>
@@ -658,7 +661,7 @@ cover(){const s=S();const cv=s.cover;
     ${MAN.covers.map(c=>`<button class="cth ${cv===c.id?'on':''}" data-act="cover" data-id="${c.id}" style="background-image:url('${c.thumb}')" title="${esc(c.title)}" aria-label="Couverture ${esc(c.title)}"></button>`).join('')}
    </div><p class="mut" style="margin:auto 0 0">Ajoute tes photos, stickers et textes directement sur la couverture avec « Ajouter ».</p></div>
    <a class="chip" href="#/home" style="align-self:flex-end">Ouvrir le planner ›</a>`},
-  R:{pid:'cover:R:'+cv,html:cv==='signature'?sigCover():`<img class="coverimg" src="${(MAN.covers.find(c=>c.id===cv)||{}).src||''}" alt="Couverture"><i class="elastic"></i>`,bare:true}}},
+  R:{pid:'cover:R:'+cv,html:cv==='signature'?sigCover():`<img class="coverimg" src="${(MAN.covers.find(c=>c.id===cv)||{}).src||''}" alt="Couverture"><img class="sigaz on-img" src="assets/signature_aziana.svg" alt="Aziana"><i class="elastic"></i>`,bare:true}}},
 home(){const t=today(),d=inRange(t)?t:D(Y0,0,1);const y=d.getFullYear(),m=d.getMonth();
   const qs=[['Année',`#/year/${y}`,'annee','01'],['Mois',`#/month/${ym(y,m)}`,'mois','02'],['Semaine',`#/week/${weekKeyFor(d)}`,'semaine','03'],['Jour',`#/day/${ymd(d)}`,'jour','04'],
    ['Finances',`#/finance/${ym(y,m)}`,'finances','06'],['Santé',`#/health/${ym(y,m)}`,'sante','11'],['Bien-être',`#/habits/${ym(y,m)}`,'bienetre','14'],['Carnets','#/nb','carnets','08'],
@@ -669,7 +672,7 @@ home(){const t=today(),d=inRange(t)?t:D(Y0,0,1);const y=d.getFullYear(),m=d.getM
    ${DECO('113','right:40px;top:26px;width:70px;transform:rotate(8deg)')}
    <div class="row2 fx"><div class="col" style="flex:0 0 240px"><div class="box" style="--c:#fbd3e0">${miniMonth(y,m)}</div>
      <div class="sticky" style="transform:rotate(-3deg);background:#fbd5df;margin:14px 8px 0">${T('dream','Créer la vie de mes rêves')}</div>
-     ${DECO('125','left:60px;bottom:40px;width:56px;transform:rotate(-12deg)')}</div>
+     ${DECO('125','left:60px;bottom:40px;width:56px;transform:rotate(-12deg)')}<img class="sighome" src="assets/signature_complete.svg" alt="Aziana Signature"></div>
    <div class="col">${BOX('Mes 3 priorités',NROWS('pri',3),'#f9c9d6','flex:none')}<div class="box fx" style="--c:#f9c9d6"><span class="lab">To do aujourd’hui</span>${ROWS('td',9,'')}</div></div></div>`},
   R:{pid:'home:R',html:`<div style="display:flex;justify-content:flex-end;padding:2px 6px 0"><div class="sticky" style="width:340px;transform:rotate(3deg);padding:16px 18px 8px">${T('quote','Une vie organisée est une vie plus libre')}</div></div>
    <div class="box" style="--c:#f9c9d6;flex:none"><span class="lab">Accès rapides</span><div class="qgrid">${qs.map(([n,h,ic,pi],i)=>`<a class="q pq" href="${h}" style="background-image:url(assets/postits/postit_${pi}.webp);transform:rotate(${[-2,1.5,-1,2,1,-1.5,2,-2,1.5,-1,-2,1,2,-1.5,1,-1][i]}deg)"><img src="assets/qicons/${ic}.webp" alt="">${n}</a>`).join('')}</div></div>
@@ -798,7 +801,7 @@ journal(a){const n=clamp(Number(a)||1,1,meta().journal);
 };
 function sigCover(){const w=(s,cls)=>`<div class="wd">${[...s].map((c,i)=>`<span class="lt ${cls[i%cls.length]}" style="transform:rotate(${[-6,4,-3,7,-5,3,-7,5][i%8]}deg)">${c}</span>`).join('')}</div>`;
   return `<div class="sig"><div class="tag">good things<br>take time</div><div class="ttl">${w('GIRLY',['b','w','p','b','w'])}${w('PLANNER',['w','b','w','b','p','b','w'])}<div class="studio">Studio</div><div class="yrs">2026 · 2027 · 2028</div></div>
-  <div class="mani">PLAN<br>CREATE<br>MANIFEST<br>BE HAPPY ♡</div>
+  <div class="mani">PLAN<br>CREATE<br>MANIFEST<br>BE HAPPY ♡</div><img class="sigaz" src="assets/signature_aziana_noir.svg" alt="Aziana">
   <img src="assets/stickers/illus/sticker_123.webp" style="left:40px;top:180px;width:120px;transform:rotate(-14deg)" alt=""><img src="assets/stickers/illus/sticker_113.webp" style="left:150px;top:150px;width:70px" alt=""><img src="assets/stickers/illus/sticker_116.webp" style="right:120px;top:90px;width:70px" alt="">
   <img src="assets/stickers/illus/sticker_013.webp" style="right:80px;bottom:60px;width:130px;transform:rotate(12deg)" alt=""><img src="assets/stickers/illus/sticker_008.webp" style="right:200px;bottom:120px;width:130px" alt=""><img src="assets/stickers/illus/sticker_009.webp" style="left:40px;top:470px;width:100px" alt=""><img src="assets/stickers/illus/sticker_133.webp" style="right:70px;top:420px;width:70px" alt=""></div><i class="elastic"></i>`}
 
