@@ -11,6 +11,7 @@
 <link rel="icon" href="assets/icon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="assets/icon-180.png">
 <style>
+@font-face{font-family:'Belle Courbe';font-style:normal;font-weight:400;font-display:swap;src:url(assets/fonts/belle-courbe.woff2) format('woff2')}
 @font-face{font-family:'Birthstone';font-style:normal;font-weight:400;font-display:swap;src:url(assets/fonts/birthstone-latin-400-normal.woff2) format('woff2')}
 @font-face{font-family:'Caveat';font-style:normal;font-weight:400;font-display:swap;src:url(assets/fonts/caveat-latin-400-normal.woff2) format('woff2')}
 @font-face{font-family:'Caveat';font-style:normal;font-weight:600;font-display:swap;src:url(assets/fonts/caveat-latin-600-normal.woff2) format('woff2')}
@@ -57,7 +58,7 @@ button{font:inherit;color:inherit;cursor:pointer}
 a{color:inherit;text-decoration:none}
 /* ---------- barre du haut ---------- */
 #top{position:fixed;left:0;right:0;top:0;height:56px;padding:0 10px;padding-top:env(safe-area-inset-top);display:flex;align-items:center;gap:6px;background:rgba(255,248,250,.92);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-bottom:1px solid var(--uibd);z-index:50}
-.brand{font:400 22px 'Birthstone';color:var(--deep);white-space:nowrap;padding:0 6px;border:0;background:none}
+.brand{font:400 22px 'Belle Courbe','Birthstone';color:var(--deep);white-space:nowrap;padding:0 6px;border:0;background:none}
 .tb{height:38px;min-width:38px;padding:0 10px;border-radius:11px;border:1px solid var(--uibd);background:var(--ui);display:inline-flex;align-items:center;justify-content:center;gap:6px;font-weight:600;font-size:14px;white-space:nowrap}
 .tb:disabled{opacity:.35;cursor:default}
 .tb.on{background:var(--deep);color:#fff;border-color:var(--deep)}
@@ -119,7 +120,7 @@ body.inkmode .ink{pointer-events:auto;cursor:crosshair}
 body.inkmode.eraser .ink{cursor:cell}
 /* ---------- éléments de modèle ---------- */
 .hd{display:flex;align-items:center;gap:10px;min-height:52px}
-.hd h1{font:400 40px/1 'Birthstone';color:var(--deep);margin:0;white-space:nowrap}
+.hd h1{font:400 40px/1 'Belle Courbe','Birthstone';color:var(--deep);margin:0;white-space:nowrap}
 .hd .sub{font:600 14px Quicksand;color:var(--ink2)}
 .hd .sp{flex:1}
 .nv{width:32px;height:32px;border-radius:50%;background:var(--blush);display:inline-flex;align-items:center;justify-content:center;font-weight:700;color:var(--deep);flex:none}
@@ -164,7 +165,7 @@ body.inkmode.eraser .ink{cursor:cell}
 .mcal .cell .w{font-size:17px;line-height:19px;flex:1;min-height:19px;overflow:hidden}
 .hol{font:600 9.5px Quicksand;color:#b86a8c;line-height:1.1}
 .mini{display:flex;flex-direction:column;gap:3px}
-.mini h3{margin:0 0 2px;font:400 22px 'Birthstone';color:var(--deep)}
+.mini h3{margin:0 0 2px;font:400 22px 'Belle Courbe','Birthstone';color:var(--deep)}
 .mini .g{display:grid;grid-template-columns:repeat(7,1fr);gap:1px;text-align:center;font:600 11.5px/21px Quicksand}
 .mini .g .h{color:var(--deep);font-weight:700;font-size:10px}
 .mini .g a{border-radius:6px}.mini .g a:hover{background:var(--rose2)}
@@ -238,7 +239,7 @@ body.inkmode.eraser .ink{cursor:cell}
 #stk{right:12px;top:66px;bottom:12px;width:min(420px,calc(100vw - 24px));border-radius:20px}
 @media (max-width:900px){#stk{left:0;right:0;width:auto;top:auto;bottom:0;height:62vh;border-radius:20px 20px 0 0}}
 .sh-h{display:flex;align-items:center;gap:8px;padding:12px 14px 8px}
-.sh-h h2{margin:0;font:400 26px 'Birthstone';color:var(--deep);flex:1}
+.sh-h h2{margin:0;font:400 26px 'Belle Courbe','Birthstone';color:var(--deep);flex:1}
 .cats{display:flex;gap:6px;overflow-x:auto;padding:0 14px 8px;flex:none}
 .cat{flex:none;border:1px solid var(--uibd);background:#fff;border-radius:20px;padding:6px 12px;font-weight:700;font-size:12.5px}
 .cat.on{background:var(--deep);border-color:var(--deep);color:#fff}
@@ -265,7 +266,7 @@ body.inkmode.eraser .ink{cursor:cell}
 #modal{position:fixed;inset:0;z-index:90;display:none;align-items:center;justify-content:center;background:rgba(80,40,60,.3);padding:16px}
 #modal.on{display:flex}
 #modal .card{background:#fff;border-radius:20px;padding:20px;max-width:440px;width:100%;box-shadow:0 20px 50px rgba(80,40,60,.35)}
-#modal h3{margin:0 0 8px;font:400 26px 'Birthstone';color:var(--deep)}
+#modal h3{margin:0 0 8px;font:400 26px 'Belle Courbe','Birthstone';color:var(--deep)}
 #modal p{margin:0 0 16px;line-height:1.5;font-size:15px}
 #modal .act{display:flex;gap:8px;justify-content:flex-end}
 #modal .card.help{max-width:560px;max-height:80vh;overflow:auto}
@@ -281,7 +282,7 @@ body.single #side{display:flex}
 @media (max-width:560px){#tools .lbl{display:none}#tools .tb{min-width:42px;padding:0 9px}}
 body.single #stage{top:104px}
 body.single #side{top:62px;bottom:auto}
-#busy{position:fixed;inset:0;z-index:99;background:rgba(255,250,252,.85);display:none;align-items:center;justify-content:center;font:400 28px 'Birthstone';color:var(--deep)}
+#busy{position:fixed;inset:0;z-index:99;background:rgba(255,250,252,.85);display:none;align-items:center;justify-content:center;font:400 28px 'Belle Courbe','Birthstone';color:var(--deep)}
 #busy.on{display:flex}
 /* impression : la double page seule */
 @media print{
@@ -326,7 +327,7 @@ body.single #side{top:62px;bottom:auto}
 /* écriture manuscrite partout */
 .w{font:20px/30px var(--hand)}
 .row .w{font-size:19px}
-.hd h1{font:400 46px/1 'Birthstone'}
+.hd h1{font:400 46px/1 'Belle Courbe','Birthstone'}
 .hd .sub,.mut,.tm{font-family:var(--hand)!important;font-weight:400!important}
 .tm{font-size:16px!important}
 .hd .sub{font-size:18px}
@@ -344,7 +345,7 @@ body.single #side{top:62px;bottom:auto}
 .deco{position:absolute;pointer-events:none;z-index:2;filter:drop-shadow(0 2px 2px rgba(120,60,80,.12))}
 .brushtitle{position:relative;isolation:isolate;padding:4px 30px 10px 18px;margin-left:-10px}
 .brushtitle::before{content:"";position:absolute;inset:18px 0 0 0;z-index:-1;background:#f7b3c8;-webkit-mask:url(assets/brush2.svg) 0 0/100% 100% no-repeat;mask:url(assets/brush2.svg) 0 0/100% 100% no-repeat}
-.brushtitle .s{font:400 44px/1 'Birthstone';color:var(--ink);display:block}
+.brushtitle .s{font:400 44px/1 'Belle Courbe','Birthstone';color:var(--ink);display:block}
 .brushtitle .b{font:400 34px/1 var(--hand);letter-spacing:.06em;color:var(--ink);display:block;margin-top:4px}
 .sticky{position:relative;background:#fbe9c4;padding:20px 18px 14px;box-shadow:0 6px 12px rgba(120,80,60,.18);border-radius:3px}
 .sticky::before{content:"";position:absolute;left:50%;top:-11px;width:96px;height:24px;margin-left:-48px;background:rgba(244,170,195,.72);transform:rotate(-4deg);-webkit-mask:url(assets/brush.svg) 0 0/100% 100%;mask:url(assets/brush.svg) 0 0/100% 100%}
@@ -368,12 +369,12 @@ body.single #side{top:62px;bottom:auto}
 .mcal .cell .n{font:400 16px var(--hand)}
 .mcal .cell.we{background:color-mix(in srgb,var(--rose) 14%,#fff)}
 .mcal .wk{font:400 12px var(--hand)}
-.mini h3{font:400 24px 'Birthstone'}
+.mini h3{font:400 24px 'Belle Courbe','Birthstone'}
 .pick{display:flex;gap:6px}.pick button{border:0;background:none;padding:0;font-size:22px;line-height:1;filter:grayscale(1) opacity(.45);transition:.15s}.pick button.on{filter:none;transform:scale(1.15)}
 .elastic{position:absolute;top:0;bottom:0;right:46px;width:20px;z-index:3;pointer-events:none;background:linear-gradient(90deg,#d9668f,#f29abb 45%,#c9567f);box-shadow:-2px 0 4px rgba(90,20,50,.3),2px 0 4px rgba(90,20,50,.2)}
 .sig .tag{font:400 38px/1.05 var(--hand)}
 .sig .mani{position:absolute;left:40px;bottom:100px;font:400 30px/1.15 var(--hand);color:#1f1a1c;transform:rotate(-6deg);z-index:2}
-.sig .studio{font:400 78px/1 'Birthstone';color:#e2457f;background:#ffd3e2;padding:2px 26px 10px;transform:rotate(-4deg);box-shadow:2px 3px 0 rgba(0,0,0,.2);margin-top:4px}
+.sig .studio{font:400 78px/1 'Belle Courbe','Birthstone';color:#e2457f;background:#ffd3e2;padding:2px 26px 10px;transform:rotate(-4deg);box-shadow:2px 3px 0 rgba(0,0,0,.2);margin-top:4px}
 .cth{aspect-ratio:.8}
 .hab .w:empty::before,.sticky .w:empty::before,.wday .w:empty::before{color:var(--ink2);opacity:.85}
 .sticky .w:empty::before{color:var(--ink)}
@@ -453,8 +454,6 @@ body.single #side{top:62px;bottom:auto}
 
 /* titres en Birthstone : un peu plus grands */
 .hd h1{font-size:54px}.brushtitle .s{font-size:50px}.mini h3{font-size:27px}.ictitle{font-size:28px}.sh-h h2,#modal h3{font-size:30px}.brand{font-size:25px}.sig .studio{font-size:86px}
-.hd h1,.brushtitle .s,.mini h3,.brand,.ictitle,.sh-h h2,#modal h3,.sig .studio{-webkit-text-stroke:.9px currentColor;paint-order:stroke fill}
-.brand{-webkit-text-stroke:.5px currentColor}
 .obj .atl{width:100%;height:100%;pointer-events:none}
 .spr2{display:block;width:72px;height:72px;background-image:url(assets/stickers/sprite2.webp);background-repeat:no-repeat}
 .q.pq{background:transparent center/100% 100% no-repeat;border-radius:0;padding:22px 4px 8px;min-height:90px;justify-content:center;filter:drop-shadow(0 2px 3px rgba(120,60,80,.18))}
@@ -942,7 +941,7 @@ function placeObjbar(){const bar=$('#objbar');const e=selEl();const o=selObj();i
   if(txt&&!emo)$('[data-o="color"]',bar).style.color=o.type==='note'?(o.bg||'#fde9b4'):(o.color||'#4a3640');
   bar.classList.add('on');const r=e.getBoundingClientRect();const bw=bar.offsetWidth,bh=bar.offsetHeight;
   let x=r.left+r.width/2-bw/2,y=r.top-bh-48*SCALE-8;if(y<62)y=r.bottom+14;x=clamp(x,6,innerWidth-bw-6);y=clamp(y,62,innerHeight-bh-70);bar.style.left=x+'px';bar.style.top=y+'px'}
-const FONTS=['Patrick Hand','Caveat','Birthstone','Dancing Script','Pacifico','Great Vibes','Sacramento','Satisfy','Homemade Apple','Courgette','Lobster','Indie Flower','Shadows Into Light','Kalam','Gloria Hallelujah','Amatic SC','Permanent Marker','Quicksand','Poppins','Comfortaa','Playfair Display','Archivo Black'];
+const FONTS=['Patrick Hand','Caveat','Belle Courbe','Birthstone','Dancing Script','Pacifico','Great Vibes','Sacramento','Satisfy','Homemade Apple','Courgette','Lobster','Indie Flower','Shadows Into Light','Kalam','Gloria Hallelujah','Amatic SC','Permanent Marker','Quicksand','Poppins','Comfortaa','Playfair Display','Archivo Black'];
 let FONTTARGET=null;
 function openFonts(target){FONTTARGET=target;const cur=target==='pages'?(S().hand||'Patrick Hand'):((selObj()||{}).font||'Caveat');
   openSheet('#fonts',`<div class="sh-h"><h2>Polices</h2><button class="tb" data-close>✕</button></div><p class="mut" style="margin:0 14px 8px">${target==='pages'?'Police d’écriture de toutes les lignes de l’agenda':'Police du texte sélectionné'}</p>
