@@ -413,13 +413,8 @@ body.single #side{top:62px;bottom:auto}
 .ttab{height:44px;padding-bottom:8px}
 .ttab.on{height:48px;margin-top:-4px}
 
-/* ===== Texture papier fournie (toutes les feuilles) ===== */
-.page.L{background:#fdfaf3 url(assets/papier_L.webp) center/100% 100% no-repeat}
-.page.R{background:#fdfaf3 url(assets/papier_R.webp) center/100% 100% no-repeat}
+/* Feuilles unies (sans texture) */
 .page::before{display:none}
-:root{--paper:#fdfaf3;--line:#efdcd8}
-:root[data-paper="rose"] .page::after{content:"";position:absolute;inset:0;background:rgba(255,214,226,.28);mix-blend-mode:multiply;pointer-events:none;z-index:0}
-:root[data-paper="blanc"] .page::after{content:"";position:absolute;inset:0;background:rgba(255,255,255,.45);pointer-events:none;z-index:0}
 
 
 #fonts{right:12px;top:66px;bottom:12px;width:min(440px,calc(100vw - 24px));border-radius:20px}
