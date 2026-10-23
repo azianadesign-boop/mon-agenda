@@ -1,0 +1,37 @@
+name: Deploy activation server
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths: ['activation/**', '.github/workflows/activation.yml']
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    env:
+      CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+      CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+      ADMIN_KEY: ${{ secrets.ADMIN_KEY }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: 20 }
+      - name: Check secrets
+        run: |
+          if [ -z "$CLOUDFLARE_API_TOKEN" ] || [ -z "$CLOUDFLARE_ACCOUNT_ID" ]; then echo "Cloudflare secrets not set yet"; exit 1; fi
+      - name: Install wrangler
+        working-directory: activation
+        run: npm i --no-save wrangler@3
+      - name: Create or reuse KV namespace
+        working-directory: activation
+        run: |
+          ID=$(curl -s -H "Authorization: Bearer $CLOUDFLARE_API_TOKEN" "https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/storage/kv/namespaces?per_page=100" | node -e 'let s="";process.stdin.on("data",d=>s+=d).on("end",()=>{const r=JSON.parse(s);const n=(r.result||[]).find(x=>x.title==="girly-activation-codes");console.log(n?n.id:"")})')
+          if [ -z "$ID" ]; then
+            ID=$(curl -s -X POST -H "Authorization: Bearer $CLOUDFLARE_API_TOKEN" -H "Content-Type: application/json" -d '{"title":"girly-activation-codes"}' "https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/storage/kv/namespaces" | node -e 'let s="";process.stdin.on("data",d=>s+=d).on("end",()=>{const r=JSON.parse(s);if(!r.success){console.error(JSON.stringify(r.errors));process.exit(1)}console.log(r.result.id)})')
+          fi
+          echo "KV id: $ID"; sed -i "s/__KV_ID__/$ID/" wrangler.toml
+      - name: Deploy
+        working-directory: activation
+        run: npx wrangler deploy
+      - name: Set admin password
+        working-directory: activation
+        run: echo "$ADMIN_KEY" | npx wrangler secret put ADMIN_KEY
