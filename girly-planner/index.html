@@ -455,6 +455,8 @@ body.single #side{top:62px;bottom:auto}
 .hd h1{font-size:54px}.brushtitle .s{font-size:50px}.mini h3{font-size:27px}.ictitle{font-size:28px}.sh-h h2,#modal h3{font-size:30px}.brand{font-size:25px}.sig .studio{font-size:86px}
 .hd h1,.brushtitle .s,.mini h3,.brand,.ictitle,.sh-h h2,#modal h3,.sig .studio{-webkit-text-stroke:.9px currentColor;paint-order:stroke fill}
 .brand{-webkit-text-stroke:.5px currentColor}
+.obj .atl{width:100%;height:100%;pointer-events:none}
+.spr2{display:block;width:72px;height:72px;background-image:url(assets/stickers/sprite2.webp);background-repeat:no-repeat}
 </style>
 </head>
 <body>
@@ -599,8 +601,9 @@ function redo(){const e=H.r.pop();if(!e)return;H.u.push(e);deselect();applyHist(
 
 /* ---------------- Assets ---------------- */
 let MAN={covers:[],stickers:[]};
-const CATS=[['all','Tous'],['illustres','Illustrés'],['decoration','Déco'],['lifestyle','Lifestyle'],['etiquettes','Étiquettes & washi'],['papeterie','Papeterie'],['navigation','Navigation'],['voyage','Voyage'],['cadres','Cadres photo'],['mine','Mes stickers']];
+const CATS=[['all','Tous'],['girly','Girly pop'],['cozy','Cozy'],['planner','Daily planner'],['papiers','Notes & washi'],['icones','Icônes roses'],['icones2','Icônes pastel'],['motifs','Motifs léopard'],['illustres','Illustrés'],['decoration','Déco'],['lifestyle','Lifestyle'],['etiquettes','Étiquettes & washi'],['papeterie','Papeterie'],['navigation','Navigation'],['voyage','Voyage'],['cadres','Cadres photo'],['mine','Mes stickers']];
 let SVGB={};const SVGC={};
+function atlStyle(key){const a=MAN.atlas&&MAN.atlas[key];if(!a)return '';const [n,x,y,w,h]=a,[AW,AH]=MAN.atlasSize;return `background-image:url(assets/atlas/atlas_${n}.webp);background-repeat:no-repeat;background-size:${AW/w*100}% ${AH/h*100}%;background-position:${AW===w?0:x/(AW-w)*100}% ${AH===h?0:y/(AH-h)*100}%`}
 const svgURL=p=>{if(!p||!SVGB[p])return p;return SVGC[p]||(SVGC[p]='data:image/svg+xml;charset=utf-8,'+encodeURIComponent(SVGB[p]))};
 const icon=n=>svgURL(`assets/stickers/vector/${n}.svg`);
 
@@ -917,7 +920,8 @@ async function objSrc(o){if(o.src&&o.src.startsWith('blob:'))return Store.url(o.
 function renderObjs(pg){const front=$('.objs',pg),backL=$('.objsB',pg);const d=doc(pg.dataset.pid);front.innerHTML='';if(backL)backL.innerHTML='';
   d.o.forEach(o=>{const e=document.createElement('div');e.className='obj '+(o.type==='note'?'note ':'')+(o.cls||'')+(o.lock?' lock':'');e.dataset.id=o.id;
     Object.assign(e.style,{left:o.x+'px',top:o.y+'px',width:o.w+'px',height:o.h+'px',transform:`rotate(${o.r||0}deg)`});
-    if(o.type==='img'){const im=document.createElement('img');im.alt='';im.draggable=false;objSrc(o).then(u=>im.src=u);e.append(im)}
+    if(o.type==='img'&&o.src&&o.src.startsWith('atl:')){const d2=document.createElement('div');d2.className='atl';d2.style.cssText=atlStyle(o.src.slice(4));e.append(d2)}
+    else if(o.type==='img'){const im=document.createElement('img');im.alt='';im.draggable=false;objSrc(o).then(u=>im.src=u);e.append(im)}
     else{const t=document.createElement('div');t.className='tx';t.textContent=o.text||'';t.style.fontSize=(o.fs||28)+'px';t.style.color=o.color||'#4a3640';t.style.fontFamily=o.font==='emoji'?'"Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif':`'${o.font||'Caveat'}'`;if(o.font==='emoji'){t.style.textAlign='center';t.style.lineHeight='1.1'}if(o.type==='note'){e.style.background=o.bg||'#fde9b4'}if(['Archivo Black','Amatic SC','Lobster','Poppins'].includes(o.font))t.style.lineHeight='1.05';if(o.font==='Homemade Apple')t.style.lineHeight='1.5';e.append(t)}
     e.insertAdjacentHTML('beforeend','<i class="hnd rt" data-h="rt"></i><i class="hnd rs" data-h="rs"></i>');
     const isSel=SEL&&SEL.pid===pg.dataset.pid&&SEL.id===o.id;if(isSel)e.classList.add('sel');if(o.op!=null&&o.op<1)e.style.opacity=o.op;if(o.hidden)e.style.display='none';
@@ -1050,10 +1054,10 @@ function drawStk(){$('#cats').innerHTML=CATS.map(([k,l])=>`<button class="cat ${
   if(STKCAT==='mine'){const l=Store.get('mystk',[]);g.innerHTML=l.length?'':'<p class="mut" style="grid-column:1/-1">Importez vos propres PNG transparents avec « Importer PNG ». Ils restent sur cet appareil.</p>';l.forEach(async s=>{const b=document.createElement('button');b.className='st';b.innerHTML=`<img alt="" src="${await Store.url(s.id)}">`;b.onclick=()=>{addObj({type:'img',src:'blob:'+s.id,ar:s.ar});toast('Sticker ajouté ♡',1200)};g.append(b)});return}
   let list=MAN.stickers.filter(s=>(STKCAT==='all'||s.cat===STKCAT)&&(!q||s.name.normalize('NFD').replace(/[̀-ͯ]/g,'').includes(q)||s.cat.includes(q)));
   const lim=STKLIM;const more=list.length>lim;list=list.slice(0,lim);
-  g.innerHTML=list.map((s,i)=>`<button class="st" data-i="${MAN.stickers.indexOf(s)}" title="${esc(s.name)}">${s.sp!=null?`<span class="spr" style="background-position:${-(s.sp%MAN.spriteCols)*72}px ${-Math.floor(s.sp/MAN.spriteCols)*72}px;background-size:${MAN.spriteCols*72}px ${MAN.spriteRows*72}px" role="img" aria-label="${esc(s.name)}"></span>`:`<img loading="lazy" decoding="async" alt="${esc(s.name)}" src="${svgURL(s.src)}">`}</button>`).join('')||'<p class="mut" style="grid-column:1/-1">Aucun sticker trouvé.</p>';if(more)g.insertAdjacentHTML('beforeend','<button class="tb" data-more style="grid-column:1/-1">Voir plus de stickers</button>')}
+  g.innerHTML=list.map((s,i)=>`<button class="st" data-i="${MAN.stickers.indexOf(s)}" title="${esc(s.name)}">${s.atl?`<span class="spr2" style="background-position:${-(s.sp2%MAN.sprite2Cols)*72}px ${-Math.floor(s.sp2/MAN.sprite2Cols)*72}px;background-size:${MAN.sprite2Cols*72}px ${MAN.sprite2Rows*72}px" role="img" aria-label="${esc(s.name)}"></span>`:s.sp!=null?`<span class="spr" style="background-position:${-(s.sp%MAN.spriteCols)*72}px ${-Math.floor(s.sp/MAN.spriteCols)*72}px;background-size:${MAN.spriteCols*72}px ${MAN.spriteRows*72}px" role="img" aria-label="${esc(s.name)}"></span>`:`<img loading="lazy" decoding="async" alt="${esc(s.name)}" src="${svgURL(s.src)}">`}</button>`).join('')||'<p class="mut" style="grid-column:1/-1">Aucun sticker trouvé.</p>';if(more)g.insertAdjacentHTML('beforeend','<button class="tb" data-more style="grid-column:1/-1">Voir plus de stickers</button>')}
 $('#cats').onclick=e=>{const b=e.target.closest('[data-k]');if(b){STKCAT=b.dataset.k;STKLIM=60;drawStk()}};
 $('#stkq').oninput=()=>{STKLIM=60;drawStk()};
-$('#stkgrid').onclick=e=>{if(e.target.closest('[data-more]')){STKLIM+=60;drawStk();return}const b=e.target.closest('[data-i]');if(!b)return;const s=MAN.stickers[b.dataset.i];const big=s.cat==='etiquettes'||s.cat==='cadres';addObj({type:'img',src:s.src,ar:s.ar,w:big?230:(s.cat==='illustres'?150:120)});toast('Sticker ajouté ♡',1200)};
+$('#stkgrid').onclick=e=>{if(e.target.closest('[data-more]')){STKLIM+=60;drawStk();return}const b=e.target.closest('[data-i]');if(!b)return;const s=MAN.stickers[b.dataset.i];const big=s.cat==='etiquettes'||s.cat==='cadres';if(s.atl){const W={papiers:250,motifs:300,icones:90,icones2:90,planner:150}[s.cat]||150;addObj({type:'img',src:'atl:'+s.atl,ar:s.ar,w:W})}else addObj({type:'img',src:s.src,ar:s.ar,w:big?230:(s.cat==='illustres'?150:120)});toast('Sticker ajouté ♡',1200)};
 
 /* ---------------- Menus ---------------- */
 function closeSheets(){setTimeout(placeObjbar,0);const g=document.getElementById('stkgrid');if(g&&document.getElementById('stk').classList.contains('on'))g.innerHTML='';$$('.sheet').forEach(s=>s.classList.remove('on'));$('#veil').classList.remove('on')}
@@ -1127,7 +1131,7 @@ let LAYPID=null;
 function openLayers(pid){LAYPID=pid;openSheet('#layers','');drawLayers()}
 function drawLayers(){const pid=LAYPID;const d=doc(pid);const name=o=>o.type==='img'?(o.cls==='photo'?'Photo':'Sticker'):o.type==='note'?'Note adhésive':(o.font==='emoji'?'Emoji':'Texte');
   const rows=[...d.o].map((o,i)=>({o,i})).reverse();
-  const prev=o=>o.type==='img'?`<span class="lp" data-src="${o.id}"></span>`:`<span class="lp lt">${esc((o.text||'').slice(0,3)||'T')}</span>`;
+  const prev=o=>o.type==='img'&&o.src&&o.src.startsWith('atl:')?`<span class="lp"><span class="atl" style="display:block;width:36px;height:36px;${atlStyle(o.src.slice(4))};background-size:${MAN.atlasSize[0]/MAN.atlas[o.src.slice(4)][3]*100}% ${MAN.atlasSize[1]/MAN.atlas[o.src.slice(4)][4]*100}%"></span></span>`:o.type==='img'?`<span class="lp" data-src="${o.id}"></span>`:`<span class="lp lt">${esc((o.text||'').slice(0,3)||'T')}</span>`;
   $('#layers').innerHTML=`<div class="sh-h"><h2>Calques</h2><button class="tb" data-close>✕</button></div>
   <p class="mut" style="margin:0 14px 8px">Du plus haut au plus bas. « Sous le texte » : l’élément passe derrière l’écriture, tu peux écrire par-dessus.</p>
   <div class="lgrid">${rows.length?rows.map(({o,i})=>`<div class="lrow ${SEL&&SEL.id===o.id?'on':''}" data-id="${o.id}">${prev(o)}<button class="lname" data-l="sel">${name(o)}<small>${o.layer==='back'?'sous le texte':'sur le texte'}${o.hidden?' · masqué':''}${o.lock?' · verrouillé':''}</small></button>
