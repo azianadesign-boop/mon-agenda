@@ -685,7 +685,7 @@ home(){const t=today(),d=inRange(t)?t:D(Y0,0,1);const y=d.getFullYear(),m=d.getM
    <div class="box" style="--c:#f9c9d6;flex:none"><span class="lab">Accès rapides</span><div class="qgrid">${qs.map(([n,h,ic,pi],i)=>`<a class="q pq" href="${h}" style="background-image:url(assets/postits/postit_${pi}.webp);transform:rotate(${[-2,1.5,-1,2,1,-1.5,2,-2,1.5,-1,-2,1,2,-1.5,1,-1][i]}deg)"><img src="assets/qicons/${ic}.webp" alt="">${n}</a>`).join('')}</div></div>
    <div class="box fx" style="--c:#dccdf0"><span class="lab">Mes habitudes</span>${HAB('hh',['Sport','Eau','Lecture','Skincare','Gratitude'],7,dayHeads())}
      <div style="display:flex;gap:6px;flex-wrap:wrap;margin-top:auto">${YEARS.map(Y=>`<a class="chip" href="#/year/${Y}">${Y}</a>`).join('')}</div></div>
-   ${DECO('124','right:36px;bottom:30px;width:120px;transform:rotate(6deg)')}`}}},
+   ${DECO('124','left:70px;top:34px;width:140px;transform:rotate(-6deg)')}`}}},
 year(a){const y=clamp(Number(a)||Y0,Y0,Y1);CTX.date=D(y,ctxDate().getFullYear()===y?ctxMonth():0,1);
   const nav=`${nvA(y>Y0?`#/year/${y-1}`:'',-1)}${nvA(y<Y1?`#/year/${y+1}`:'',1)}`;
   const half=h=>`<div style="display:grid;grid-template-columns:1fr 1fr;gap:12px 18px;flex:1">${[0,1,2,3,4,5].map(i=>`<div class="box">${miniMonth(y,h*6+i)}</div>`).join('')}</div>`;
