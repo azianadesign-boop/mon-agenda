@@ -670,7 +670,7 @@ home(){const t=today(),d=inRange(t)?t:D(Y0,0,1);const y=d.getFullYear(),m=d.getM
    ${DECO('113','right:40px;top:26px;width:70px;transform:rotate(8deg)')}
    <div class="row2 fx"><div class="col" style="flex:0 0 240px"><div class="box" style="--c:#fbd3e0">${miniMonth(y,m)}</div>
      <div class="sticky" style="transform:rotate(-3deg);background:#fbd5df;margin:14px 8px 0">${T('dream','Créer la vie de mes rêves')}</div>
-     ${DECO('125','left:60px;bottom:40px;width:56px;transform:rotate(-12deg)')}</div>
+     </div>
    <div class="col">${BOX('Mes 3 priorités',NROWS('pri',3),'#f9c9d6','flex:none')}<div class="box fx" style="--c:#f9c9d6"><span class="lab">To do aujourd’hui</span>${ROWS('td',9,'')}</div></div></div>`},
   R:{pid:'home:R',html:`<div style="display:flex;justify-content:flex-end;padding:2px 6px 0"><div class="sticky" style="width:340px;transform:rotate(3deg);padding:16px 18px 8px">${T('quote','Une vie organisée est une vie plus libre')}</div></div>
    <div class="box" style="--c:#f9c9d6;flex:none"><span class="lab">Accès rapides</span><div class="qgrid">${qs.map(([n,h,ic,pi],i)=>`<a class="q pq" href="${h}" style="background-image:url(assets/postits/postit_${pi}.webp);transform:rotate(${[-2,1.5,-1,2,1,-1.5,2,-2,1.5,-1,-2,1,2,-1.5,1,-1][i]}deg)"><img src="assets/qicons/${ic}.webp" alt="">${n}</a>`).join('')}</div></div>
@@ -680,7 +680,7 @@ home(){const t=today(),d=inRange(t)?t:D(Y0,0,1);const y=d.getFullYear(),m=d.getM
 year(a){const y=clamp(Number(a)||Y0,Y0,Y1);CTX.date=D(y,ctxDate().getFullYear()===y?ctxMonth():0,1);
   const nav=`${nvA(y>Y0?`#/year/${y-1}`:'',-1)}${nvA(y<Y1?`#/year/${y+1}`:'',1)}`;
   const half=h=>`<div style="display:grid;grid-template-columns:1fr 1fr;gap:12px 18px;flex:1">${[0,1,2,3,4,5].map(i=>`<div class="box">${miniMonth(y,h*6+i)}</div>`).join('')}</div>`;
-  return {title:`Année ${y}`,sec:'year',L:{pid:`year:${y}:L`,html:`${HD(String(y),'janvier → juin',nav)}${DECO('125','left:250px;top:24px;width:42px')}${DECO('015','right:60px;top:20px;width:40px')}${half(0)}`},R:{pid:`year:${y}:R`,html:`${HD('','juillet → décembre','',`<span class="chip">Jours fériés soulignés</span>`)}${half(1)}${BOX('Mes mots pour '+y,O('yword','Trois mots qui guident mon année'),'#fde9b4','flex:none')}`}}},
+  return {title:`Année ${y}`,sec:'year',L:{pid:`year:${y}:L`,html:`${HD(String(y),'janvier → juin',nav)}${half(0)}`},R:{pid:`year:${y}:R`,html:`${HD('','juillet → décembre','',`<span class="chip">Jours fériés soulignés</span>`)}${half(1)}${BOX('Mes mots pour '+y,O('yword','Trois mots qui guident mon année'),'#fde9b4','flex:none')}`}}},
 month(a){const d0=parseYM(a);const y=d0.getFullYear(),m=d0.getMonth();CTX.date=D(y,m,Math.min(ctxDate().getMonth()===m&&ctxDate().getFullYear()===y?ctxDate().getDate():1,28));
   const [p,n]=monthNav('month',y,m);const t=ymd(today());const cells=monthCells(y,m);const pid=`month:${ym(y,m)}`;const R=cells.length/7;const H=dayHeads();
   const cell=d=>`<div class="cell ${d.getMonth()!==m?'out':''} ${[0,6].includes(d.getDay())?'we':''} ${ymd(d)===t?'today':''}">${inRange(d)?`<a class="n" href="#/day/${ymd(d)}">${d.getDate()}</a>`:`<span class="n">${d.getDate()}</span>`}${HOL[ymd(d)]&&d.getMonth()===m?`<span class="hol">${HOL[ymd(d)]}</span>`:''}${d.getMonth()===m?T('c'+d.getDate()):''}</div>`;
@@ -700,7 +700,7 @@ week(a){let m=a?parse(a):mondayOf(ctxDate());m=mondayOf(m);const key=ymd(m);cons
    ${DECO('018','left:380px;top:26px;width:34px')}<div class="col fx" style="gap:0">${days.map(row).join('')}</div>`},
    R:{pid:`week:${key}:R`,html:`<div class="row2" style="flex:none;height:190px;margin-top:6px"><div class="brushtitle" style="align-self:center;padding:14px 26px 20px 22px"><span class="b" style="font-size:30px">Petits pas</span><span class="b" style="font-size:33px;white-space:nowrap">GRANDS RÊVES</span><span style="font-size:24px;padding-left:80px">♡</span></div>
      <div class="sticky" style="transform:rotate(2deg);padding-top:16px"><div class="w" style="font-size:22px;margin-bottom:2px">Cette semaine</div>${[0,1,2,3].map(i=>`<div class="row" style="height:28px;border:0">${CK('cs'+i)}${O('cs'+i+'t',['Avancer sur le projet','Sport 3x','Temps pour moi','Soirée entre amies'][i],'" style="font-size:18px')}</div>`).join('')}</div></div>
-   ${DECO('125','left:250px;top:10px;width:46px;transform:rotate(-10deg)')}
+   
    <div class="row2" style="flex:none">${BOX('Top 3 priorités',NROWS('top',3),'#f9c9d6')}${BOX('Habitudes',HAB('wh',['Sport','Eau','Lecture','Skincare','Gratitude'],7,dayHeads()),'#dccdf0')}</div>
    <div class="row2 fx"><div class="box" style="--c:#f9c9d6;background:color-mix(in srgb,#f9c9d6 45%,#fff)"><span class="lab">Notes & idées</span>${LINES('notes','')}</div>
     <div style="display:flex;align-items:center;justify-content:center;flex:0 0 200px"><div class="sticky grid" style="transform:rotate(-4deg);width:190px">${T('wq','Une semaine de plus vers la vie que j’aime ☺')}</div></div></div>
@@ -800,8 +800,8 @@ journal(a){const n=clamp(Number(a)||1,1,meta().journal);
 function sigCover(){const w=(s,cls)=>`<div class="wd">${[...s].map((c,i)=>`<span class="lt ${cls[i%cls.length]}" style="transform:rotate(${[-6,4,-3,7,-5,3,-7,5][i%8]}deg)">${c}</span>`).join('')}</div>`;
   return `<div class="sig"><div class="tag">good things<br>take time</div><div class="ttl">${w('GIRLY',['b','w','p','b','w'])}${w('PLANNER',['w','b','w','b','p','b','w'])}<div class="studio">Studio</div><div class="yrs">2026 · 2027 · 2028</div></div>
   <div class="mani">PLAN<br>CREATE<br>MANIFEST<br>BE HAPPY ♡</div>
-  <img src="assets/stickers/illus/sticker_123.webp" style="left:40px;top:180px;width:120px;transform:rotate(-14deg)" alt=""><img src="assets/stickers/illus/sticker_113.webp" style="left:150px;top:150px;width:70px" alt=""><img src="assets/stickers/illus/sticker_116.webp" style="right:120px;top:90px;width:70px" alt="">
-  <img src="assets/stickers/illus/sticker_013.webp" style="right:80px;bottom:60px;width:130px;transform:rotate(12deg)" alt=""><img src="assets/stickers/illus/sticker_008.webp" style="right:200px;bottom:120px;width:130px" alt=""><img src="assets/stickers/illus/sticker_009.webp" style="left:40px;top:470px;width:100px" alt=""><img src="assets/stickers/illus/sticker_133.webp" style="right:70px;top:420px;width:70px" alt=""></div><i class="elastic"></i>`}
+  <img src="assets/stickers/illus/sticker_123.webp" style="left:40px;top:180px;width:120px;transform:rotate(-14deg)" alt=""><img src="assets/stickers/illus/sticker_113.webp" style="left:150px;top:150px;width:70px" alt="">
+  <img src="assets/stickers/illus/sticker_013.webp" style="right:80px;bottom:60px;width:130px;transform:rotate(12deg)" alt=""><img src="assets/stickers/illus/sticker_008.webp" style="right:200px;bottom:120px;width:130px" alt=""><img src="assets/stickers/illus/sticker_009.webp" style="left:40px;top:470px;width:100px" alt=""></div><i class="elastic"></i>`}
 
 /* ---------------- Routeur & rendu ---------------- */
 let CUR=null;
