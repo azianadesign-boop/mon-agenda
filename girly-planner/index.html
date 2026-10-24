@@ -2033,7 +2033,7 @@ function moonStats(){const o=moonD();const days=Object.keys(o.log).filter(k=>(o.
   return {o,per,starts,cl,avg,avgP,pred,fert,ovu,st,lastStart}}
 const MPH={reg:['Règles','🩸','Repos, chaleur, fer et hydratation.'],fol:['Folliculaire','🌱','L’énergie remonte : idéal pour démarrer des projets.'],ovu:['Ovulation','✨','Pic d’énergie et de confiance.'],lut:['Lutéale','🌙','Ralentis, douceur et magnésium.']};
 function fillMoon(el){if(!el.querySelector('.mcalm,.moonph'))return;const M=moonStats();const o=M.o;const t=ymd(today());
-  const s1=$('.moonstat',el);if(s1){const st=M.st;s1.innerHTML=st?`<div class="mcard2"><div class="mbig">${st.n}<small>${tr('jour')}</small></div><div class="mtx"><b>${esc(tr(MPH[st.phase][0]))} ${MPH[st.phase][1]}</b><span>${st.to>0?`${tr('Prochaines règles dans')} ${st.to} ${tr('jours')}`:st.to===0?tr('Règles prévues aujourd’hui'):`${tr('Règles en retard de')} ${-st.to} ${tr('jours')}`}</span><span class="d">${esc(fmtLong(parse(st.next)))}</span></div></div>`
+  const s1=$('.moonstat',el);if(s1){const st=M.st;s1.innerHTML=st?`<div class="mcard2"><div class="mbig">${st.n}<small>${tr('jour')}</small></div><div class="mtx"><b>${esc(tr(MPH[st.phase][0]))} ${MPH[st.phase][1]}</b><span>${st.to>0?`${tr('Prochaines règles dans')} ${st.to} ${tr(st.to===1?'jour':'jours')}`:st.to===0?tr('Règles prévues aujourd’hui'):`${tr('Règles en retard de')} ${-st.to} ${tr('jours')}`}</span><span class="d">${esc(fmtLong(parse(st.next)))}</span></div></div>`
    :`<div class="mcard2 empty"><div class="mtx"><b>${tr('Bienvenue dans Moon 🌙')}</b><span>${tr('Note le 1er jour de tes dernières règles pour commencer.')}</span></div></div>`;
    s1.innerHTML+=`<button class="mbtn" data-mq="${o.log[t]&&o.log[t].flow?'end':'start'}">${o.log[t]&&o.log[t].flow?tr('Mes règles sont finies'):tr('Mes règles commencent aujourd’hui')}</button>`}
   const cal=$('.mcalm',el);if(cal){const [y,m]=cal.dataset.ym.split('-').map(Number);const cells=monthCells(y,m-1);const H=dayHeads();
@@ -2080,7 +2080,7 @@ let TOOLT=null;function toolsKick(){clearTimeout(TOOLT);if(!document.body.classL
 ['pointerdown','input'].forEach(ev=>document.addEventListener(ev,e=>{if(e.target.closest('#tools,#penopts,#tbTools')||(MODE!=='select'&&e.target.closest('#stage')))setTimeout(toolsKick,0)},true));
 
 /* ===================== Mises à jour automatiques ===================== */
-const APP_V='47';let UPD_T0=Date.now(),UPD_SHOWN=false;
+const APP_V='48';let UPD_T0=Date.now(),UPD_SHOWN=false;
 async function doUpdate(){busy(true);try{await Store.flush();if('caches' in window){const ks=await caches.keys();await Promise.all(ks.map(k=>caches.delete(k)))}
   if(navigator.serviceWorker){const rs=await navigator.serviceWorker.getRegistrations();await Promise.all(rs.map(r=>r.update().catch(()=>{})))}}catch(e){}location.reload()}
 async function checkUpdate(manual){try{const r=await fetch('version.json?t='+Date.now(),{cache:'no-store'});if(!r.ok)throw 0;const v=(await r.json()).v;
