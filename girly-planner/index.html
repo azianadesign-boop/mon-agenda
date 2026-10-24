@@ -2080,7 +2080,7 @@ let TOOLT=null;function toolsKick(){clearTimeout(TOOLT);if(!document.body.classL
 ['pointerdown','input'].forEach(ev=>document.addEventListener(ev,e=>{if(e.target.closest('#tools,#penopts,#tbTools')||(MODE!=='select'&&e.target.closest('#stage')))setTimeout(toolsKick,0)},true));
 
 /* ===================== Mises à jour automatiques ===================== */
-const APP_V='44';let UPD_T0=Date.now(),UPD_SHOWN=false;
+const APP_V='45';let UPD_T0=Date.now(),UPD_SHOWN=false;
 async function doUpdate(){busy(true);try{await Store.flush();if('caches' in window){const ks=await caches.keys();await Promise.all(ks.map(k=>caches.delete(k)))}
   if(navigator.serviceWorker){const rs=await navigator.serviceWorker.getRegistrations();await Promise.all(rs.map(r=>r.update().catch(()=>{})))}}catch(e){}location.reload()}
 async function checkUpdate(manual){try{const r=await fetch('version.json?t='+Date.now(),{cache:'no-store'});if(!r.ok)throw 0;const v=(await r.json()).v;
@@ -2090,7 +2090,7 @@ function showUpd(){if(UPD_SHOWN)return;UPD_SHOWN=true;const b=document.createEle
 document.addEventListener('visibilitychange',()=>{if(!document.hidden)checkUpdate()});setInterval(()=>checkUpdate(),30*60000);
 
 /* ===================== Blocs ajoutés + tout décocher ===================== */
-function extHTML(pid){const xs=(doc(pid).f.xs)||[];const blk=xs.map((b,i)=>{const k='x'+b.id;
+function extHTML(pid){return '';const xs=(doc(pid).f.xs)||[];const blk=xs.map((b,i)=>{const k='x'+b.id;
   const inner=b.t==='list'?[...Array(8)].map((_,j)=>`<div class="row">${CK(k+'c'+j)}${O(k+'r'+j)}</div>`).join(''):b.t==='notes'?T(k+'n','Écris ici…','lined" style="min-height:220px'):`<div style="height:240px;display:flex">${SLOT(k+'p')}</div>`;
   return `<div class="box xblk" style="--c:${['#fbd3e0','#dccdf0','#cdebdc','#fde9b4','#d3e3f7','#fbd9c6'][i%6]};flex:none"><div class="xh">${O(k+'t',{list:'Ma liste',notes:'Mes notes',photo:'Ma photo'}[b.t]||'Bloc','" style="font:400 calc(21px*var(--tz)) var(--hand);flex:1')}<button class="xdel noprint" data-xdel="${b.id}" aria-label="Supprimer ce bloc">✕</button></div>${inner}</div>`}).join('');
   return blk+`<div class="xbar noprint"><button class="xadd" data-xadd>${'<svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>'}${tr('Ajouter un bloc')}</button></div>`}
