@@ -453,8 +453,10 @@ body.single #side{top:62px;bottom:auto}
 .spr2{display:block;width:72px;height:72px;background-image:url(assets/stickers/sprite2.webp);background-repeat:no-repeat}
 .q.pq{background:transparent center/100% 100% no-repeat;border-radius:0;padding:22px 4px 8px;min-height:90px;justify-content:center;filter:drop-shadow(0 2px 3px rgba(120,60,80,.18))}
 .q.pq img{width:34px;height:34px;object-fit:contain}
-.q.pq:hover{filter:drop-shadow(0 4px 6px rgba(120,60,80,.28));transform:translateY(-2px)}
+.q.pq:hover{filter:drop-shadow(0 4px 6px rgba(120,60,80,.28));transform:rotate(var(--r)) translateY(-2px)!important}
 .qgrid{gap:6px 8px}
+/* blocs d’accès rapide plus petits */
+.qgrid{gap:10px 8px;align-content:start}.q.pq{width:84%;justify-self:center;min-height:74px;padding:17px 3px 6px;font-size:13.5px;gap:2px}.q.pq img{width:28px;height:28px}
 .drop svg{stroke-linejoin:round;stroke-linecap:round}.drop .lid{fill:#e8f1fb}.drop.f .cup{fill:#b9d6f6}.drop.f .lid{fill:#9fc2ea}
 
 .pbg{position:absolute;inset:0;z-index:0;background:center/cover no-repeat;pointer-events:none;display:none}
@@ -719,7 +721,7 @@ home(){const t=today(),d=inRange(t)?t:D(Y0,0,1);const y=d.getFullYear(),m=d.getM
      </div>
    <div class="col">${BOX('Mes 3 priorités',NROWS('pri',3),'#f9c9d6','flex:none')}<div class="box fx" style="--c:#f9c9d6"><span class="lab">To do aujourd’hui</span>${ROWS('td',9,'')}</div></div></div>`},
   R:{pid:'home:R',html:`<div style="display:flex;justify-content:flex-end;padding:2px 6px 0"><div class="sticky" style="width:340px;transform:rotate(3deg);padding:16px 18px 8px">${T('quote','Une vie organisée est une vie plus libre')}</div></div>
-   <div class="box" style="--c:#f9c9d6;flex:none"><span class="lab">Accès rapides</span><div class="qgrid">${qs.map(([n,h,ic,pi],i)=>`<a class="q pq" href="${h}" style="background-image:url(assets/postits/postit_${pi}.webp);transform:rotate(${[-2,1.5,-1,2,1,-1.5,2,-2,1.5,-1,-2,1,2,-1.5,1,-1][i]}deg)"><img src="assets/qicons/${ic}.webp" alt="">${n}</a>`).join('')}</div></div>
+   <div class="box" style="--c:#f9c9d6;flex:none"><span class="lab">Accès rapides</span><div class="qgrid">${qs.map(([n,h,ic,pi],i)=>`<a class="q pq" href="${h}" style="background-image:url(assets/postits/postit_${pi}.webp);--r:${[-4,3,-2,5,2.5,-5,4.5,-3,3.5,-1.5,-4.5,1.5,5.5,-3.5,2,-6][i]}deg;transform:rotate(var(--r))"><img src="assets/qicons/${ic}.webp" alt="">${n}</a>`).join('')}</div></div>
    <div class="box fx" style="--c:#dccdf0"><span class="lab">Mes habitudes</span>${HAB('hh',['Sport','Eau','Lecture','Skincare','Gratitude'],7,dayHeads())}
      <div style="display:flex;gap:6px;flex-wrap:wrap;margin-top:auto">${YEARS.map(Y=>`<a class="chip" href="#/year/${Y}">${Y}</a>`).join('')}</div></div>
    ${DECO('124','left:70px;top:34px;width:140px;transform:rotate(-6deg)')}`}}},
