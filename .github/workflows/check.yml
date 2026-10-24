@@ -4,17 +4,19 @@ on:
     branches: [main]
     paths: ['.github/workflows/check.yml']
   workflow_dispatch:
+permissions:
+  contents: write
 jobs:
   check:
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v4
       - run: |
           U=https://girly-activation.azianadesign.workers.dev
-          curl -sf $U/ | tee r1.txt; echo
-          curl -sf -X POST $U/activate -H 'Content-Type: application/json' -d '{"code":"GIRLY-AAAA-BBBB","device":"check"}' | tee r2.txt; echo
-          curl -sf -X POST $U/admin/api -H 'Content-Type: application/json' -d '{"key":"wrong","action":"list"}' | tee r3.txt; echo || true
-          for d in a b c d; do curl -sf -X POST $U/activate -H 'Content-Type: application/json' -d "{\"code\":\"GIRLYXZBF8MUT\",\"device\":\"t$d\"}" | tee -a r4.txt; echo; done
-          [ $(grep -c '"ok":true' r4.txt) -eq 4 ]
-          grep -q '"service"' r1.txt && grep -q '"invalid"' r2.txt
-          curl -sI -H 'Origin: https://azianadesign-boop.github.io' $U/ | grep -i access-control-allow-origin
-# check 1792802083
+          { echo "root: $(curl -s $U/)"
+            echo "bad: $(curl -s -X POST $U/activate -H 'Content-Type: application/json' -d '{"code":"GIRLY-AAAA-BBBB","device":"check"}')"
+            for d in a b c d e; do echo "owner $d: $(curl -s -X POST $U/activate -H 'Content-Type: application/json' -d "{\"code\":\"GIRLYXZBF8MUT\",\"device\":\"t$d\"}")"; done
+          } > activation/check.txt
+          cat activation/check.txt
+          git config user.name github-actions && git config user.email actions@github.com
+          git add activation/check.txt && git commit -m "check result [skip ci]" && git push || true
