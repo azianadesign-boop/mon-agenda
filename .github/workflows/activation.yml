@@ -4,6 +4,8 @@ on:
   push:
     branches: [main]
     paths: ['activation/**', '.github/workflows/activation.yml']
+permissions:
+  contents: write
 jobs:
   deploy:
     runs-on: ubuntu-latest
@@ -37,3 +39,11 @@ jobs:
       - name: Deploy
         working-directory: activation
         run: npx wrangler deploy
+      - name: Save worker URL
+        run: |
+          SUB=$(curl -s -H "Authorization: Bearer $CLOUDFLARE_API_TOKEN" "https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/workers/subdomain" | node -e 'let s="";process.stdin.on("data",d=>s+=d).on("end",()=>{const r=JSON.parse(s);console.log((r.result||{}).subdomain||"")})')
+          URL="https://girly-activation.$SUB.workers.dev"
+          echo "$URL" > activation/URL.txt
+          echo "Worker: $URL" >> $GITHUB_STEP_SUMMARY
+          git config user.name "github-actions" && git config user.email "actions@github.com"
+          git add activation/URL.txt && git commit -m "Save activation URL [skip ci]" && git push || true
