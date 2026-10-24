@@ -1406,17 +1406,16 @@ function placeTools(){const t=$('#tools'),narrow=matchMedia('(max-width:900px)')
 function fit(){placeTools();const st=$('#stage'),bk=$('#book');const single=isSingle();bk.classList.toggle('single',single);document.body.classList.toggle('single',single);const PHN=isPhone();document.body.classList.toggle('phone',PHN);
   if(single){const side=CUR&&CUR.showR?'R':'L';bk.classList.toggle('showR',side==='R');$$('#side button,#pgseg button').forEach(b=>b.classList.toggle('on',b.dataset.side===side))}
   let ph=860;if(PHN&&single){const s0=(st.clientWidth-16)/620;ph=Math.max(860,Math.min(1240,Math.round((st.clientHeight-16)/s0)))}const base=ph;
-  const setPH=v=>{if(v!==PH){PH=v;document.documentElement.style.setProperty('--ph',v+'px')}};setPH(ph);
+  const RS=document.documentElement.style;const setPH=(v,keep)=>{PH=v;RS.setProperty('--ph',v+'px');if(!keep)RS.setProperty('--tph',v+'px')};setPH(ph);
   const W=PHN&&single?620:single?648:1416,ex=PHN&&single?0:single?28:68;const pad=PHN?8:single?10:16;
   SCALE=Math.min((st.clientWidth-pad*2)/W,(st.clientHeight-pad*2)/(base+ex));SCALE=Math.max(.2,SCALE);bk.style.transform=`scale(${SCALE})`;
-  document.documentElement.style.setProperty('--tph','var(--ph)');
   /* si le texte est grand, la page s’allonge au lieu de couper le contenu (on fait défiler) */
   for(let it=0;it<5;it++){let def=0;for(const pg of $$('.page')){if(!pg.getClientRects().length)continue;const pr=pg.getBoundingClientRect();
       for(const b of pg.querySelectorAll('.tpl .box')){const br=b.getBoundingClientRect();if(!br.height)continue;let mx=0;for(const c of b.children){const cr=c.getBoundingClientRect();if(cr.height)mx=Math.max(mx,cr.bottom)}def=Math.max(def,(mx-br.bottom)/SCALE)}
       for(const c of pg.querySelectorAll('.tpl > *')){const r=c.getBoundingClientRect();if(r.height)def=Math.max(def,(r.bottom-pr.bottom)/SCALE)}}
     if(def<=2)break;setPH(Math.min(2600,Math.ceil(PH+def+10)))}
   {const tph=PH;let ext=0;for(const pg of $$('.page')){if(!pg.getClientRects().length)continue;const x=pg.querySelector('.xwrap');if(x&&x.querySelector('.xblk'))ext=Math.max(ext,x.offsetHeight-40)}
-   document.documentElement.style.setProperty('--tph',tph+'px');if(ext>0)setPH(Math.min(3000,tph+ext))}
+   RS.setProperty('--tph',tph+'px');if(ext>0)setPH(Math.min(3000,tph+ext),true)}
   const Hh=PH+ex;const w=$('#bookwrap');w.style.width=W*SCALE+'px';w.style.height=Hh*SCALE+'px';
   st.classList.toggle('tall',Hh*SCALE>st.clientHeight-pad);
   $$('.page').forEach(p=>sizeInk(p));placeObjbar()}
@@ -2081,7 +2080,7 @@ let TOOLT=null;function toolsKick(){clearTimeout(TOOLT);if(!document.body.classL
 ['pointerdown','input'].forEach(ev=>document.addEventListener(ev,e=>{if(e.target.closest('#tools,#penopts,#tbTools')||(MODE!=='select'&&e.target.closest('#stage')))setTimeout(toolsKick,0)},true));
 
 /* ===================== Mises à jour automatiques ===================== */
-const APP_V='43';let UPD_T0=Date.now(),UPD_SHOWN=false;
+const APP_V='44';let UPD_T0=Date.now(),UPD_SHOWN=false;
 async function doUpdate(){busy(true);try{await Store.flush();if('caches' in window){const ks=await caches.keys();await Promise.all(ks.map(k=>caches.delete(k)))}
   if(navigator.serviceWorker){const rs=await navigator.serviceWorker.getRegistrations();await Promise.all(rs.map(r=>r.update().catch(()=>{})))}}catch(e){}location.reload()}
 async function checkUpdate(manual){try{const r=await fetch('version.json?t='+Date.now(),{cache:'no-store'});if(!r.ok)throw 0;const v=(await r.json()).v;
