@@ -732,6 +732,17 @@ body.phone:not(.single) #pgseg{display:none}
 :root[data-ts] .page .mut{font-size:calc(14px*var(--tz))}
 :root[data-ts="l"] .page .ck{width:23px;height:23px}
 :root[data-ts="l"] .page .mjd{width:21px;height:21px}
+
+.mjsz{display:flex;gap:2px;margin-left:6px;background:#fff;border-radius:10px;padding:2px;box-shadow:0 0 0 1px #e3efe7}
+.mjc+.mjsz{margin-left:6px}.mjbox .lab .mjc{margin-left:auto}
+.mjbox .lab:not(:has(.mjc)) .mjsz{margin-left:auto}
+.mjsz button{border:0;background:none;border-radius:8px;width:24px;height:24px;padding:0;font:700 11px Quicksand;color:var(--ink2);line-height:1}
+.mjsz button.m{font-size:14px}.mjsz button.l{font-size:17px}
+.mjsz button.on{background:#34c37a;color:#fff}
+html[data-ts] .page .mjbox[data-mz="s"] .mjt{font-size:calc(15px*var(--tz))}
+html[data-ts] .page .mjbox[data-mz="l"] .mjt{font-size:calc(25px*var(--tz))}html[data-ts] .page .mjbox[data-mz="l"] .mjt b{font-size:calc(16px*var(--tz))}
+html[data-ts] .page .mjbox[data-mz="l"] .mjd{width:24px;height:24px;margin-top:5px}.mjbox[data-mz="l"] .mji.done .mjd::after{left:8px;top:4px;width:5px;height:10px}
+.mjbox[data-mz="l"] .mjempty{font-size:22px}
 </style>
 </head>
 <body>
@@ -1753,9 +1764,11 @@ function mjItems(k){const L=doc(`day:${k}:L`),R=doc(`day:${k}:R`),out=[];
   for(let i=0;i<4;i++){const t=(R.f['td'+i]||'').trim();if(t)out.push({pid:`day:${k}:R`,f:'tdc'+i,t,done:Number(R.f['tdc'+i])===1})}
   return out}
 function fillMJ(el){const box=$('.mj',el);if(!box)return;const k=box.dataset.mj;const L=mjItems(k);const n=L.filter(x=>x.done).length;
-  const lab=$('.mjbox .lab',el);if(lab)lab.innerHTML=`${esc(tr('Ma journée'))}${L.length?` <em class="mjc ${n===L.length?'ok':''}">${n}/${L.length}</em>`:''}`;
+  const mz=S().mjs||'m';const bx=$('.mjbox',el);if(bx)bx.dataset.mz=mz;
+  const lab=$('.mjbox .lab',el);if(lab)lab.innerHTML=`${esc(tr('Ma journée'))}${L.length?` <em class="mjc ${n===L.length?'ok':''}">${n}/${L.length}</em>`:''}<span class="mjsz noprint">${[['s','A','Petit'],['m','A','Moyen'],['l','A','Grand']].map(([k,l,t])=>`<button data-mjs="${k}" class="${k} ${mz===k?'on':''}" title="${esc(tr(t))}" aria-label="${esc(tr(t))}">${l}</button>`).join('')}</span>`;
   box.innerHTML=L.length?L.map(x=>`<div class="mji ${x.done?'done':''}"><button class="mjd" data-mjp="${x.pid}" data-mjf="${x.f}" aria-label="${x.done?tr('Fait'):tr('À faire')}"></button><a href="#/day/${k}" class="mjt">${x.tm?`<b>${x.tm}</b> `:''}${x.star?'★ ':''}${esc(x.t)}</a></div>`).join('')
    :`<a class="mjempty" href="#/day/${k}">${esc(tr('Rien de prévu aujourd’hui'))}<span>${esc(tr('+ Ajouter dans ma journée'))}</span></a>`}
+document.addEventListener('click',e=>{const z=e.target.closest('[data-mjs]');if(z){e.preventDefault();e.stopPropagation();setS({mjs:z.dataset.mjs});$$('.page').forEach(fillMJ);return}});
 document.addEventListener('click',e=>{const b=e.target.closest('.mjd');if(!b)return;e.preventDefault();e.stopPropagation();const pid=b.dataset.mjp,f=b.dataset.mjf;
   mutate(pid,d=>{d.f[f]=Number(d.f[f])===1?0:1});const pg=b.closest('.page');if(pg)fillMJ(pg);try{navigator.vibrate&&navigator.vibrate(10)}catch(_){}},true);
 (async function start(){await Store.init();applyTheme();await gate();
