@@ -1324,7 +1324,7 @@ addEventListener('visibilitychange',()=>{if(document.hidden)snapTake()});
   try{const [m,b]=await Promise.all([fetch('assets/manifest.json').then(r=>r.json()),fetch('assets/svg.json').then(r=>r.json()).catch(()=>({}))]);MAN=m;SVGB=b}catch(e){console.warn('manifest',e)}
   await migrateV1();migrateV3();
   window.addEventListener('hashchange',route);
-  if(!location.hash||location.hash==='#'||location.hash==='#/')history.replaceState(null,'',Store.get('last','#/home'));
+  if(!location.hash||location.hash==='#'||location.hash==='#/'||!sessionStorage.getItem('gps-open')){history.replaceState(null,'','#/home')}try{sessionStorage.setItem('gps-open','1')}catch(e){}
   setMode('select');route();
   try{if('serviceWorker' in navigator&&location.protocol==='https:'&&window.top===window)navigator.serviceWorker.register('sw.js').catch(()=>{})}catch(e){}
   if(!Store.get('seenHelp')){Store.set('seenHelp',1);setTimeout(()=>toast('Bienvenue ♡ Menu ⋯ → Mode d’emploi pour tous les gestes',4200),600)}
