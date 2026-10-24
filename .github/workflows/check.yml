@@ -15,3 +15,4 @@ jobs:
           curl -sf -X POST $U/admin/api -H 'Content-Type: application/json' -d '{"key":"wrong","action":"list"}' | tee r3.txt; echo || true
           grep -q '"service"' r1.txt && grep -q '"invalid"' r2.txt
           curl -sI -H 'Origin: https://azianadesign-boop.github.io' $U/ | grep -i access-control-allow-origin
+# check 1792802083
