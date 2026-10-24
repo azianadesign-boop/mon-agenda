@@ -751,6 +751,12 @@ body.phone:not(.single) #pgseg{display:none}
 #nav .setrow{display:flex;align-items:center;gap:12px;margin:8px 6px 0;padding:10px 12px;border-radius:16px;background:#fff;box-shadow:0 0 0 1px #f3dde5;text-decoration:none;color:var(--ink)}
 #nav .setrow .t{flex:1;display:flex;flex-direction:column;min-width:0}#nav .setrow b{font:700 14.5px Quicksand}#nav .setrow small{font:500 12px Quicksand;color:var(--ink2)}
 #nav .setrow .chev{width:18px;height:18px;stroke:#d6b7c3;fill:none;stroke-width:2.2}
+
+/* iPhone : la barre du bas reste visible au-dessus des panneaux */
+body.phone #tabbar{z-index:76}
+body.phone .sheet{bottom:calc(62px + env(safe-area-inset-bottom))!important;max-height:calc(100% - 62px - env(safe-area-inset-bottom) - 40px)!important;padding-bottom:6px!important}
+body.phone #stk{height:calc(62vh - 62px)!important}
+@media (orientation:landscape) and (max-height:500px){body.phone .sheet{bottom:calc(48px + env(safe-area-inset-bottom))!important;max-height:calc(100% - 48px - 20px)!important}}
 </style>
 </head>
 <body>
@@ -1456,9 +1462,10 @@ $('#addmenu').onclick=e=>{const sd=e.target.closest('[data-side]');if(sd){ACTIVE
   if(k==='list')addObj({type:'txt',cl:true,text:tr('Ma tâche')+'\n'+tr('Ma tâche')+'\n'+tr('Ma tâche'),done:[],fs:28,w:270,h:130,color:'#4a3640',font:'Patrick Hand'});
   if(k==='note')addObj({type:'note',text:'',fs:26,w:200,h:180,bg:'#fde9b4',r:-2});
   if(k==='emoji')openEmoji();if(k==='fond')openFonds(activePage().dataset.pid);if(k==='layers')openLayers(activePage().dataset.pid)};
-$('#tbAdd').onclick=()=>$('#bAdd').click();
-$('#tbNav').onclick=()=>{NAVY=null;buildNav()};
-$('#tbTools').onclick=()=>{document.body.classList.toggle('toolsopen');if(!document.body.classList.contains('toolsopen')&&MODE!=='select')setMode('select');fit();syncTab()};
+$('#tbAdd').onclick=()=>{if($('#addmenu').classList.contains('on')){closeSheets();return}closeSheets();$('#bAdd').click()};
+$('#tbNav').onclick=()=>{if($('#nav').classList.contains('on')){closeSheets();return}NAVY=null;buildNav()};
+$$('#tabbar a').forEach(a=>a.addEventListener('click',()=>closeSheets()));
+$('#tbTools').onclick=()=>{closeSheets();document.body.classList.toggle('toolsopen');if(!document.body.classList.contains('toolsopen')&&MODE!=='select')setMode('select');fit();syncTab()};
 $('#hUndo').onclick=()=>$('#bUndo').click();$('#hRedo').onclick=()=>$('#bRedo').click();
 function syncTab(){const tb=$('#tabbar');if(!tb||!CUR)return;$('#tbToday').href='#/day/'+ymd(today());
   $$('[data-tb]',tb).forEach(b=>b.classList.remove('on'));const k=CUR.sec==='home'?'home':(CUR.sec==='day'&&location.hash.endsWith(ymd(today())))?'day':null;
