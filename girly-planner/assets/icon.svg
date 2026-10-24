@@ -1,1 +1,36 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><rect width="512" height="512" rx="110" fill="#ef8fb2"/><rect x="96" y="120" width="150" height="190" rx="10" fill="#1f1a1c" transform="rotate(-6 171 215)"/><text x="171" y="265" font-family="Arial Black,Arial" font-weight="900" font-size="150" fill="#fff" text-anchor="middle" transform="rotate(-6 171 215)">G</text><rect x="262" y="140" width="150" height="190" rx="10" fill="#fff" transform="rotate(5 337 235)"/><text x="337" y="285" font-family="Arial Black,Arial" font-weight="900" font-size="150" fill="#1f1a1c" text-anchor="middle" transform="rotate(5 337 235)">P</text><path d="M256 450c-60-40-96-72-96-108a46 46 0 0 1 96-16 46 46 0 0 1 96 16c0 36-36 68-96 108z" fill="#c4547f" stroke="#fff" stroke-width="10"/></svg>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024">
+<defs>
+ <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ffd1e3"/><stop offset=".55" stop-color="#ff8fbf"/><stop offset="1" stop-color="#d977e8"/></linearGradient>
+ <radialGradient id="glow" cx=".3" cy=".2" r=".8"><stop offset="0" stop-color="#fff" stop-opacity=".55"/><stop offset=".6" stop-color="#fff" stop-opacity="0"/></radialGradient>
+ <linearGradient id="cov" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff"/><stop offset="1" stop-color="#ffeaf3"/></linearGradient>
+ <linearGradient id="hrt" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ff7eb3"/><stop offset="1" stop-color="#e0337a"/></linearGradient>
+ <linearGradient id="ring" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff6c9"/><stop offset=".5" stop-color="#f4c46a"/><stop offset="1" stop-color="#d9973a"/></linearGradient>
+ <filter id="sh" x="-20%" y="-20%" width="140%" height="140%"><feDropShadow dx="0" dy="22" stdDeviation="26" flood-color="#9b2a66" flood-opacity=".35"/></filter>
+</defs>
+<rect width="1024" height="1024" fill="url(#bg)"/>
+<rect width="1024" height="1024" fill="url(#glow)"/>
+<g fill="#fff" opacity=".9">
+ <path d="M190 250l14 34 34 14-34 14-14 34-14-34-34-14 34-14z"/>
+ <path d="M840 190l10 24 24 10-24 10-10 24-10-24-24-10 24-10z"/>
+ <path d="M860 760l12 28 28 12-28 12-12 28-12-28-28-12 28-12z"/>
+ <circle cx="170" cy="780" r="10"/><circle cx="880" cy="430" r="8"/><circle cx="240" cy="520" r="7"/>
+</g>
+<g transform="rotate(-7 512 540)" filter="url(#sh)">
+ <rect x="262" y="230" width="500" height="600" rx="64" fill="#ffc2da"/>
+ <rect x="282" y="230" width="480" height="600" rx="60" fill="url(#cov)"/>
+ <rect x="282" y="230" width="58" height="600" rx="28" fill="#ffd7e7"/>
+ <g fill="none" stroke-linecap="round">
+  <g stroke="#ff9cc4" stroke-width="10" opacity=".55"><path d="M400 700h260"/><path d="M400 750h190"/></g>
+ </g>
+ <path d="M542 640c-10 0-150-82-150-182 0-52 40-90 88-90 30 0 52 15 62 38 10-23 32-38 62-38 48 0 88 38 88 90 0 100-140 182-150 182z" fill="url(#hrt)"/>
+ <path d="M452 420c-22 6-38 26-40 52" stroke="#fff" stroke-width="16" stroke-linecap="round" fill="none" opacity=".75"/>
+ <g fill="url(#ring)" stroke="#c98634" stroke-width="3">
+  <rect x="246" y="300" width="98" height="30" rx="15"/><rect x="246" y="420" width="98" height="30" rx="15"/><rect x="246" y="540" width="98" height="30" rx="15"/><rect x="246" y="660" width="98" height="30" rx="15"/>
+ </g>
+ <g transform="translate(690 262) rotate(18)">
+  <path d="M0 0c-40-34-86-30-86 6s46 40 86 6z" fill="#ff5c9e"/><path d="M0 0c40-34 86-30 86 6s-46 40-86 6z" fill="#ff5c9e"/>
+  <path d="M-4 6l-30 72 22-6 12 22 4-86z M4 6l30 72-22-6-12 22-4-86z" fill="#e8407f"/>
+  <circle cx="0" cy="4" r="17" fill="#ff86b6"/>
+ </g>
+</g>
+</svg>
