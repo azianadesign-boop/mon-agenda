@@ -13,6 +13,8 @@ jobs:
           curl -sf $U/ | tee r1.txt; echo
           curl -sf -X POST $U/activate -H 'Content-Type: application/json' -d '{"code":"GIRLY-AAAA-BBBB","device":"check"}' | tee r2.txt; echo
           curl -sf -X POST $U/admin/api -H 'Content-Type: application/json' -d '{"key":"wrong","action":"list"}' | tee r3.txt; echo || true
+          for d in a b c d; do curl -sf -X POST $U/activate -H 'Content-Type: application/json' -d "{\"code\":\"GIRLYXZBF8MUT\",\"device\":\"t$d\"}" | tee -a r4.txt; echo; done
+          [ $(grep -c '"ok":true' r4.txt) -eq 4 ]
           grep -q '"service"' r1.txt && grep -q '"invalid"' r2.txt
           curl -sI -H 'Origin: https://azianadesign-boop.github.io' $U/ | grep -i access-control-allow-origin
 # check 1792802083
