@@ -1,0 +1,7 @@
+root: {"ok":true,"service":"Girly Planner Studio — activation"}
+bad: {"ok":false,"reason":"invalid"}
+owner a: {"ok":true,"owner":true}
+owner b: {"ok":true,"owner":true}
+owner c: {"ok":true,"owner":true}
+owner d: {"ok":true,"owner":true}
+owner e: {"ok":true,"owner":true}
