@@ -878,31 +878,30 @@ button.tog{border:0;padding:0}
 #stage.tall{overflow-y:auto!important;align-items:flex-start!important;-webkit-overflow-scrolling:touch;padding-bottom:12px}
 #stage.tall #bookwrap{margin:8px auto 16px}
 
-/* Moon : tailles de base plus grandes (lisibles sur iPhone) */
-:root[data-ts] .moonph .phc b{font-size:calc(21px*var(--tz))}
-:root[data-ts] .moonph .phc span{font-size:calc(18px*var(--tz))}
-.moonph .phc{padding:14px;border-radius:18px}
-:root[data-ts] .kpis b{font-size:calc(36px*var(--tz))}
-:root[data-ts] .kpis span{font-size:calc(16px*var(--tz))}
-:root[data-ts] .page .moonstats .mut,:root[data-ts] .page .moonwarn{font-size:calc(16px*var(--tz))!important}
-:root[data-ts] .mrow2{font-size:calc(19px*var(--tz));padding:12px 0}
-:root[data-ts] .stp button{width:calc(42px*var(--tz));height:calc(42px*var(--tz));font-size:calc(22px*var(--tz))}
-:root[data-ts] .stp b{font-size:calc(22px*var(--tz))}
-.moonset .tog{transform:scale(1.25);transform-origin:right center}
-:root[data-ts] .mtx{font-size:calc(18px*var(--tz))}:root[data-ts] .mtx b{font-size:calc(24px*var(--tz))}:root[data-ts] .mtx .d{font-size:calc(15px*var(--tz))}
-.mbig{width:90px;height:90px;font-size:40px}.mbig small{font-size:14px}
-:root[data-ts] .mbtn{font-size:calc(19px*var(--tz));padding:16px;border-radius:18px}
-:root[data-ts] .mleg{font-size:calc(16px*var(--tz))}.mleg i{width:15px;height:15px}
-:root[data-ts] .mh2{font-size:calc(15px*var(--tz))}
-:root[data-ts] .mday{font-size:calc(18px*var(--tz))}
-:root[data-ts] .page .tpl>p.mut{font-size:calc(16px*var(--tz))!important}
-.cbars{height:110px}.cbars span{font-size:15px}
-:root[data-ts] .page .moonstats .lab,:root[data-ts] .page .moonset .lab{font-size:calc(24px*var(--tz))}
-/* École : tailles de base plus grandes */
-:root[data-ts] .sdh{font-size:calc(15px*var(--tz))}
-:root[data-ts] .stime .w{font-size:calc(14px*var(--tz))!important}
-:root[data-ts] .scell .w{font-size:calc(17px*var(--tz))!important}
-.sdot{width:13px;height:13px}
+/* Moon & École : tailles intermédiaires (grandes mais équilibrées) */
+:root[data-ts] .moonph .phc b{font-size:calc(18.5px*var(--tz))}
+:root[data-ts] .moonph .phc span{font-size:calc(16px*var(--tz))}
+.moonph .phc{padding:12px 13px;border-radius:16px}
+:root[data-ts] .kpis b{font-size:calc(32px*var(--tz))}
+:root[data-ts] .kpis span{font-size:calc(14.5px*var(--tz))}
+:root[data-ts] .page .moonstats .mut,:root[data-ts] .page .moonwarn{font-size:calc(14.5px*var(--tz))!important}
+:root[data-ts] .mrow2{font-size:calc(17px*var(--tz));padding:10px 0}
+:root[data-ts] .stp button{width:calc(38px*var(--tz));height:calc(38px*var(--tz));font-size:calc(20px*var(--tz))}
+:root[data-ts] .stp b{font-size:calc(20px*var(--tz))}
+.moonset .tog{transform:scale(1.12);transform-origin:right center}
+:root[data-ts] .mtx{font-size:calc(16px*var(--tz))}:root[data-ts] .mtx b{font-size:calc(21px*var(--tz))}:root[data-ts] .mtx .d{font-size:calc(14px*var(--tz))}
+.mbig{width:80px;height:80px;font-size:35px}.mbig small{font-size:12.5px}
+:root[data-ts] .mbtn{font-size:calc(17px*var(--tz));padding:14px;border-radius:16px}
+:root[data-ts] .mleg{font-size:calc(14.5px*var(--tz))}.mleg i{width:13px;height:13px}
+:root[data-ts] .mh2{font-size:calc(13.5px*var(--tz))}
+:root[data-ts] .mday{font-size:calc(16px*var(--tz))}
+:root[data-ts] .page .tpl>p.mut{font-size:calc(15px*var(--tz))!important}
+.cbars{height:95px}.cbars span{font-size:13.5px}
+:root[data-ts] .page .moonstats .lab,:root[data-ts] .page .moonset .lab{font-size:calc(22.5px*var(--tz))}
+:root[data-ts] .sdh{font-size:calc(13.5px*var(--tz))}
+:root[data-ts] .stime .w{font-size:calc(13px*var(--tz))!important}
+:root[data-ts] .scell .w{font-size:calc(16px*var(--tz))!important}
+.sdot{width:12px;height:12px}
 </style>
 </head>
 <body>
@@ -2045,7 +2044,7 @@ let TOOLT=null;function toolsKick(){clearTimeout(TOOLT);if(!document.body.classL
 ['pointerdown','input'].forEach(ev=>document.addEventListener(ev,e=>{if(e.target.closest('#tools,#penopts,#tbTools')||(MODE!=='select'&&e.target.closest('#stage')))setTimeout(toolsKick,0)},true));
 
 /* ===================== Mises à jour automatiques ===================== */
-const APP_V='38';let UPD_T0=Date.now(),UPD_SHOWN=false;
+const APP_V='39';let UPD_T0=Date.now(),UPD_SHOWN=false;
 async function doUpdate(){busy(true);try{await Store.flush();if('caches' in window){const ks=await caches.keys();await Promise.all(ks.map(k=>caches.delete(k)))}
   if(navigator.serviceWorker){const rs=await navigator.serviceWorker.getRegistrations();await Promise.all(rs.map(r=>r.update().catch(()=>{})))}}catch(e){}location.reload()}
 async function checkUpdate(manual){try{const r=await fetch('version.json?t='+Date.now(),{cache:'no-store'});if(!r.ok)throw 0;const v=(await r.json()).v;
