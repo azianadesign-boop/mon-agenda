@@ -91,8 +91,8 @@ body.inkmode #penopts{display:flex}
   radial-gradient(circle at 20% 30%,rgba(255,255,255,.25),transparent 40%),
   radial-gradient(circle at 80% 80%,rgba(0,0,0,.05),transparent 45%),var(--frame);
   box-shadow:0 18px 40px rgba(150,90,115,.28),inset 0 0 0 2px rgba(255,255,255,.35)}
-.pages{position:absolute;left:14px;top:14px;width:1240px;height:860px;display:flex;border-radius:10px;overflow:visible}
-.page{position:relative;width:620px;height:860px;background:var(--paper);overflow:hidden;flex:none}
+.pages{position:absolute;left:14px;top:14px;width:1240px;height:var(--ph,860px);display:flex;border-radius:10px;overflow:visible}
+.page{position:relative;width:620px;height:var(--ph,860px);background:var(--paper);overflow:hidden;flex:none}
 .page.L{border-radius:10px 0 0 10px;box-shadow:inset -22px 0 26px -18px rgba(120,70,90,.25)}
 .page.R{border-radius:0 10px 10px 0;box-shadow:inset 22px 0 26px -18px rgba(120,70,90,.25)}
 .page::before{content:"";position:absolute;inset:0;pointer-events:none;opacity:.5;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2'/%3E%3CfeColorMatrix values='0 0 0 0 .55 0 0 0 0 .35 0 0 0 0 .42 0 0 0 .05 0'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E")}
@@ -119,7 +119,7 @@ body.inkmode #penopts{display:flex}
 .tpl{position:absolute;inset:0;padding:28px 34px 24px 30px;display:flex;flex-direction:column;gap:12px;z-index:1}
 .R .tpl{padding:28px 30px 24px 36px}
 .objs{position:absolute;inset:0;z-index:3;pointer-events:none}
-.ink,.inklive{position:absolute;left:0;top:0;width:620px;height:860px;z-index:4;pointer-events:none;touch-action:none}
+.ink,.inklive{position:absolute;left:0;top:0;width:620px;height:var(--ph,860px);z-index:4;pointer-events:none;touch-action:none}
 body.inkmode .ink{pointer-events:auto;cursor:crosshair}
 body.inkmode.eraser .ink{cursor:cell}
 /* ---------- éléments de modèle ---------- */
@@ -497,8 +497,8 @@ body.phone #pgseg svg{width:15px;height:15px;stroke:currentColor;fill:none;strok
 body.phone #bLang{padding:0 7px!important;min-width:36px}
 html:not([lang=en]) body.phone #bLang .len,html[lang=en] body.phone #bLang .lfr,body.phone #bLang .lsep{display:none!important}
 body.phone #bLang>span{opacity:1!important}
-body.phone .book.single{width:620px;height:860px}
-body.phone .book.single .frame{background:none!important;box-shadow:none!important;width:620px;height:860px}
+body.phone .book.single{width:620px;height:var(--ph,860px)}
+body.phone .book.single .frame{background:none!important;box-shadow:none!important;width:620px;height:var(--ph,860px)}
 body.phone .book.single .stitch{display:none}
 body.phone .book.single .pages{left:0;top:0}
 body.phone .book.single .page{box-shadow:0 4px 22px rgba(150,70,100,.18),0 0 0 1px rgba(200,140,160,.18)!important;border-radius:18px!important}
@@ -669,7 +669,7 @@ body.phone #penopts .sw,body.phone #penopts button{flex:none}body.phone #penopts
    GIRLY PLANNER STUDIO — Agenda & Notebook 2026–2028
    Application autonome : données privées, stockées sur l'appareil (IndexedDB).
    ========================================================= */
-const PW=620, PH=860, YEARS=[2026,2027,2028], Y0=2026, Y1=2028;
+const PW=620;let PH=860;const YEARS=[2026,2027,2028], Y0=2026, Y1=2028;
 const MOIS=['Janvier','Février','Mars','Avril','Mai','Juin','Juillet','Août','Septembre','Octobre','Novembre','Décembre'];
 const MC=['Jan','Fév','Mar','Avr','Mai','Juin','Juil','Août','Sep','Oct','Nov','Déc'];
 const JOURS=['Dimanche','Lundi','Mardi','Mercredi','Jeudi','Vendredi','Samedi']; // index = getDay()
@@ -853,14 +853,14 @@ month(a){const d0=parseYM(a);const y=d0.getFullYear(),m=d0.getMonth();CTX.date=D
   const [p,n]=monthNav('month',y,m);const t=ymd(today());const cells=monthCells(y,m);const pid=`month:${ym(y,m)}`;const R=cells.length/7;const H=dayHeads();
   const cell=d=>`<div class="cell ${d.getMonth()!==m?'out':''} ${[0,6].includes(d.getDay())?'we':''} ${ymd(d)===t?'today':''}">${inRange(d)?`<a class="n" href="#/day/${ymd(d)}">${d.getDate()}</a>`:`<span class="n">${d.getDate()}</span>`}${HOL[ymd(d)]&&d.getMonth()===m?`<span class="hol">${HOL[ymd(d)]}</span>`:''}${d.getMonth()===m?T('c'+d.getDate()):''}</div>`;
   const PH=isPhone();const cellR=d=>cell(d).replace('<div class="cell','<div data-fp="'+pid+':R" class="cell');
-  const gF=`<div class="mcal" style="flex:none;height:722px;grid-template-columns:24px repeat(7,1fr);grid-template-rows:auto repeat(${R},1fr)"><span class="dh"></span>${H.map(h=>`<span class="dh">${h}</span>`).join('')}${[...Array(R)].map((_,r)=>`<a class="wk lk" href="#/week/${weekKeyFor(cells[r*7])}" title="Voir la semaine">S${isoWeek(S().weekStart===0?add(cells[r*7],1):cells[r*7])}</a>`+cells.slice(r*7,r*7+5).map(cell).join('')+cells.slice(r*7+5,r*7+7).map(cellR).join('')).join('')}</div>`;
+  const gF=`<div class="mcal" style="flex:none;height:calc(var(--ph,860px) - 138px);grid-template-columns:24px repeat(7,1fr);grid-template-rows:auto repeat(${R},1fr)"><span class="dh"></span>${H.map(h=>`<span class="dh">${h}</span>`).join('')}${[...Array(R)].map((_,r)=>`<a class="wk lk" href="#/week/${weekKeyFor(cells[r*7])}" title="Voir la semaine">S${isoWeek(S().weekStart===0?add(cells[r*7],1):cells[r*7])}</a>`+cells.slice(r*7,r*7+5).map(cell).join('')+cells.slice(r*7+5,r*7+7).map(cellR).join('')).join('')}</div>`;
   const gL=`<div class="mcal" style="flex:none;height:722px;grid-template-columns:24px repeat(5,1fr);grid-template-rows:auto repeat(${R},1fr)"><span class="dh"></span>${H.slice(0,5).map(h=>`<span class="dh">${h}</span>`).join('')}${[...Array(R)].map((_,r)=>`<a class="wk lk" href="#/week/${weekKeyFor(cells[r*7])}" title="Voir la semaine">S${isoWeek(S().weekStart===0?add(cells[r*7],1):cells[r*7])}</a>`+cells.slice(r*7,r*7+5).map(cell).join('')).join('')}</div>`;
   const gR=`<div class="mcal" style="flex:0 0 190px;height:722px;grid-template-columns:1fr 1fr;grid-template-rows:auto repeat(${R},1fr)">${H.slice(5).map(h=>`<span class="dh">${h}</span>`).join('')}${[...Array(R)].map((_,r)=>cells.slice(r*7+5,r*7+7).map(cell).join('')).join('')}</div>`;
   const nd=new Date(y,m+1,0).getDate();
   const hab=[0,1,2,3].map(h=>`<div style="margin-bottom:4px">${O('hn'+h,['Eau','Sport','Lecture','Skincare'][h],'" style="font-size:18px;height:26px;line-height:26px')}<div style="display:flex;gap:3px;flex-wrap:wrap">${[...Array(nd)].map((_,i)=>`<button class="dot" style="width:13px;height:13px;--dc:${DC[h]}" data-f="h${h}-${i+1}" data-t="ck" title="${i+1}"></button>`).join('')}</div></div>`).join('');
   return {title:`${MOIS[m]} ${y}`,sec:'month',L:{pid:pid+':L',html:`${HD(`${MOIS[m]} ${y}`,'',nvA(p,-1),nvA(n,1))}${PH?gF:gL}`},
    R:{pid:pid+':R',html:`<div class="hd"><span class="sp"></span><a class="chip" href="#/habits/${ym(y,m)}">Habitudes</a><a class="chip" href="#/finance/${ym(y,m)}">Budget</a></div>${DECO('126','right:250px;top:14px;width:46px')}
-   <div class="row2" style="flex:none;height:722px">${PH?'':gR}<div class="col">${BOX('Objectifs du mois',ROWS('ob',5,'Ce que je veux accomplir'),'#f9c9d6','flex:none')}${BOX('Suivi habitudes',hab,'#dccdf0','flex:none')}<div class="box fx" style="--c:#fbd9c6"><span class="lab">Notes</span>${LINES('notes','')}</div></div></div>`}}},
+   <div class="row2" style="flex:none;height:${PH?'calc(var(--ph,860px) - 138px)':'722px'}">${PH?'':gR}<div class="col">${BOX('Objectifs du mois',ROWS('ob',5,'Ce que je veux accomplir'),'#f9c9d6','flex:none')}${BOX('Suivi habitudes',hab,'#dccdf0','flex:none')}<div class="box fx" style="--c:#fbd9c6"><span class="lab">Notes</span>${LINES('notes','')}</div></div></div>`}}},
 week(a){let m=a?parse(a):mondayOf(ctxDate());m=mondayOf(m);const key=ymd(m);const days=weekDays(key);CTX.date=inRange(days[3])?days[3]:days.find(inRange)||D(Y0,0,1);
   const pk=ymd(add(m,-7)),nk=ymd(add(m,7));const prev=weekDays(pk).some(inRange)?`#/week/${pk}`:'',next=weekDays(nk).some(inRange)?`#/week/${nk}`:'';
   const t=ymd(today());const wn=isoWeek(m);const mid=days[3];const DS=LANG==='en'?['SUN','MON','TUE','WED','THU','FRI','SAT']:['DIM','LUN','MAR','MER','JEU','VEN','SAM'];
@@ -1027,7 +1027,8 @@ function isSingle(){if(isPhone())return true;const v=S().view;if(v==='double')re
 function placeTools(){const t=$('#tools'),narrow=matchMedia('(max-width:900px)').matches||isPhone();if(narrow&&t.parentNode.id==='top')document.body.append(t);else if(!narrow&&t.parentNode.id!=='top')$('#top').insertBefore(t,$('#bMenu'))}
 function fit(){placeTools();const st=$('#stage'),bk=$('#book');const single=isSingle();bk.classList.toggle('single',single);document.body.classList.toggle('single',single);const PHN=isPhone();document.body.classList.toggle('phone',PHN);
   if(single){const side=CUR&&CUR.showR?'R':'L';bk.classList.toggle('showR',side==='R');$$('#side button,#pgseg button').forEach(b=>b.classList.toggle('on',b.dataset.side===side))}
-  const W=PHN?620:single?648:1416,Hh=PHN?860:single?888:928;const pad=PHN?6:single?10:16;
+  {let ph=860;if(PHN){const s0=(st.clientWidth-12)/620;ph=Math.max(860,Math.min(1240,Math.floor((st.clientHeight-12)/s0)))}if(ph!==PH){PH=ph;document.documentElement.style.setProperty('--ph',ph+'px')}}
+  const W=PHN?620:single?648:1416,Hh=PHN?PH:single?888:928;const pad=PHN?6:single?10:16;
   SCALE=Math.min((st.clientWidth-pad*2)/W,(st.clientHeight-pad*2)/Hh);SCALE=Math.max(.2,SCALE);
   bk.style.transform=`scale(${SCALE})`;const w=$('#bookwrap');w.style.width=W*SCALE+'px';w.style.height=Hh*SCALE+'px';
   $$('.page').forEach(p=>sizeInk(p));placeObjbar()}
