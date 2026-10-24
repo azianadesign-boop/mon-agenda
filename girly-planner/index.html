@@ -797,7 +797,7 @@ html:root[data-paper="perso"]{--paper:var(--paperc,#fff)}
 .msw{position:relative}
 
 /* libellés de ligne : jamais coupés (ex. « Jour 1 ») */
-.row .tm{white-space:nowrap;width:auto!important;min-width:42px;padding-right:8px;flex:none}
+.row .tm{white-space:nowrap;flex:none;padding-right:6px;box-sizing:content-box}.row .tm:not([style*="width"]){width:3.4em!important}.row .tm[style*="width"]{min-width:4.6em}
 
 /* Planning scolaire */
 .sgrid{display:grid;gap:3px;height:100%;min-height:0}
