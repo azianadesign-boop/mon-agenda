@@ -981,7 +981,10 @@ body:not(.inkmode) .ink,body:not(.inkmode) .inklive{touch-action:auto}
 :root.hl100 .lab::before{-webkit-mask-image:url(assets/brushS.svg);mask-image:url(assets/brushS.svg)}
 :root.hl100 .brushtitle::before{-webkit-mask-image:url(assets/brush2S.svg);mask-image:url(assets/brush2S.svg)}
 .chip.nbname{padding:3px 12px;max-width:50%;cursor:text}.chip.nbname .w{display:inline-block;min-width:60px;font:inherit;border:0!important;background:none!important;padding:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%}
-.upb{position:absolute;left:24px;top:3px;z-index:4;display:inline-flex;align-items:center;gap:3px;height:24px;padding:0 11px 0 6px;font-size:12.5px!important;border-radius:999px;background:var(--tint,#fde4ec);color:var(--deep,#b0477a);font:700 12.5px Quicksand,sans-serif;text-decoration:none;box-shadow:0 1px 4px rgba(150,70,100,.15);white-space:nowrap}.R .upb{left:auto;right:24px}.book.single .R .upb{right:auto;left:24px}.upb svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:2.6;stroke-linecap:round;stroke-linejoin:round}.book:not(.single) .page.R .upb{display:none}@media print{.upb{display:none}}
+.upb{position:absolute;left:26px;top:2px;z-index:4;display:inline-flex;align-items:center;gap:2px;height:26px;padding:0 8px 0 0;background:none;color:var(--deep,#b0477a);font:600 13.5px/1 Quicksand,sans-serif;letter-spacing:.01em;text-decoration:none;white-space:nowrap;opacity:.9;transition:opacity .15s,transform .15s;-webkit-tap-highlight-color:transparent}
+.upb svg{width:17px;height:17px;stroke:currentColor;fill:none;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round;margin-left:-4px}
+.upb:active{opacity:.5;transform:translateX(-2px)}.upb:hover{opacity:1}
+.R .upb{left:auto;right:26px}.book.single .R .upb{right:auto;left:26px}.book:not(.single) .page.R .upb{display:none}@media print{.upb{display:none}}
 </style>
 </head>
 <body>
@@ -2177,7 +2180,7 @@ let TOOLT=null;function toolsKick(){clearTimeout(TOOLT);if(!document.body.classL
 ['pointerdown','input'].forEach(ev=>document.addEventListener(ev,e=>{if(e.target.closest('#tools,#penopts,#tbTools')||(MODE!=='select'&&e.target.closest('#stage')))setTimeout(toolsKick,0)},true));
 
 /* ===================== Mises à jour automatiques ===================== */
-const APP_V='67';let UPD_T0=Date.now(),UPD_SHOWN=false;
+const APP_V='68';let UPD_T0=Date.now(),UPD_SHOWN=false;
 async function doUpdate(){busy(true);try{await Store.flush();if('caches' in window){const ks=await caches.keys();await Promise.all(ks.map(k=>caches.delete(k)))}
   if(navigator.serviceWorker){const rs=await navigator.serviceWorker.getRegistrations();await Promise.all(rs.map(r=>r.update().catch(()=>{})))}}catch(e){}location.reload()}
 async function checkUpdate(manual){try{const r=await fetch('version.json?t='+Date.now(),{cache:'no-store'});if(!r.ok)throw 0;const v=(await r.json()).v;
