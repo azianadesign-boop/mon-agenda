@@ -3,7 +3,7 @@ GIRLY PLANNER STUDIO — Crédits et licences
 POLICES (toutes autorisées pour un usage commercial et l'intégration dans une application)
 - Licence SIL Open Font License 1.1 (OFL) : Yesteryear, Birthstone, Patrick Hand, Caveat, Dancing Script,
   Quicksand, Archivo Black, Pacifico, Great Vibes, Sacramento, Courgette, Lobster, Indie Flower,
-  Shadows Into Light, Kalam, Gloria Hallelujah, Amatic SC, Poppins, Comfortaa, Playfair Display
+  Shadows Into Light, Kalam, Gloria Hallelujah, Amatic SC, Poppins, Comfortaa, Playfair Display, Allura, Parisienne, Alex Brush
 - Licence Apache 2.0 : Satisfy, Homemade Apple, Permanent Marker
 Les polices restent la propriété de leurs auteurs ; elles ne sont pas vendues séparément.
 
