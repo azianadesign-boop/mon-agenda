@@ -1053,6 +1053,7 @@ body:not(.inkmode) .ink,body:not(.inkmode) .inklive{touch-action:auto}
 .tthead:has(.hbdot[data-v="5"]){background:linear-gradient(135deg,#7fd3c0,#3fa39a)}
 .tthead:has(.hbdot[data-v="6"]){background:linear-gradient(135deg,#8fb7f0,#5a7fd8)}
 .tthead:has(.hbdot[data-v="7"]){background:linear-gradient(135deg,#3b4150,#2c313d)}
+.ttc .sdot[data-v="1"]{background:#e483ab}.ttc .sdot[data-v="2"]{background:#6fcbe0}.ttc .sdot[data-v="3"]{background:#9ccb6a}.ttc .sdot[data-v="4"]{background:#f9b375}.ttc .sdot[data-v="5"]{background:#9a95e6}.ttc .sdot[data-v="6"]{background:#f7d266}.ttc .sdot[data-v="7"]{background:#a9afba}.tthead .hbdot[data-v="0"]{background:linear-gradient(135deg,#e66fa3,#c2418a)!important}.tthead .hbdot[data-v="1"]{background:linear-gradient(135deg,#b48be8,#7d55c7)!important}.tthead .hbdot[data-v="2"]{background:linear-gradient(135deg,#ff8f8f,#e2557a)!important}.tthead .hbdot[data-v="3"]{background:linear-gradient(135deg,#f6a6c9,#e57fae)!important}.tthead .hbdot[data-v="4"]{background:linear-gradient(135deg,#ffb38a,#f07b6b)!important}.tthead .hbdot[data-v="5"]{background:linear-gradient(135deg,#7fd3c0,#3fa39a)!important}.tthead .hbdot[data-v="6"]{background:linear-gradient(135deg,#8fb7f0,#5a7fd8)!important}.tthead .hbdot[data-v="7"]{background:linear-gradient(135deg,#3b4150,#2c313d)!important}
 </style>
 </head>
 <body>
@@ -2314,7 +2315,7 @@ let TOOLT=null;function toolsKick(){clearTimeout(TOOLT);if(!document.body.classL
 ['pointerdown','input'].forEach(ev=>document.addEventListener(ev,e=>{if(e.target.closest('#tools,#penopts,#tbTools')||(MODE!=='select'&&e.target.closest('#stage')))setTimeout(toolsKick,0)},true));
 
 /* ===================== Mises à jour automatiques ===================== */
-const APP_V='81';let UPD_T0=Date.now(),UPD_SHOWN=false;
+const APP_V='82';let UPD_T0=Date.now(),UPD_SHOWN=false;
 async function doUpdate(){busy(true);try{await Store.flush();if('caches' in window){const ks=await caches.keys();await Promise.all(ks.map(k=>caches.delete(k)))}
   if(navigator.serviceWorker){const rs=await navigator.serviceWorker.getRegistrations();await Promise.all(rs.map(r=>r.update().catch(()=>{})))}}catch(e){}location.reload()}
 async function checkUpdate(manual){try{const r=await fetch('version.json?t='+Date.now(),{cache:'no-store'});if(!r.ok)throw 0;const v=(await r.json()).v;
