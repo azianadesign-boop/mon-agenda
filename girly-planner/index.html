@@ -686,7 +686,7 @@ body.phone:not(.single) #pgseg{display:none}
  body.phone #tools{bottom:calc(54px + env(safe-area-inset-bottom))!important}
 }
 /* fond de page : cadres plus opaques pour bien lire */
-.page.hasbg .box{background:color-mix(in srgb,var(--c,#fff) 22%,rgba(255,255,255,.9))!important;backdrop-filter:blur(2px);-webkit-backdrop-filter:blur(2px)}
+.page.hasbg .box{background:rgba(255,255,255,.1)!important;backdrop-filter:none;-webkit-backdrop-filter:none;box-shadow:inset 0 0 0 1.5px rgba(255,255,255,.75),0 2px 10px rgba(120,60,90,.10)!important}.page.hasbg .box [contenteditable],.page.hasbg .box .w,.page.hasbg .box .tm,.page.hasbg .box small,.page.hasbg .box span:not(.lab){text-shadow:0 0 3px rgba(255,255,255,.95),0 0 8px rgba(255,255,255,.8)}.page.hasbg .box .ck{background:rgba(255,255,255,.75)}
 .page.hasbg .mcal,.page.hasbg .acell,.page.hasbg .mini{background:rgba(255,255,255,.88)!important}
 .page.hasbg .hd h1,.page.hasbg .hd .sub{text-shadow:0 0 6px #fff,0 0 12px #fff}
 .fth.mine{background:var(--tint);display:flex;align-items:center;justify-content:center;flex-direction:column;gap:4px;color:var(--deep)}
@@ -2148,7 +2148,7 @@ let TOOLT=null;function toolsKick(){clearTimeout(TOOLT);if(!document.body.classL
 ['pointerdown','input'].forEach(ev=>document.addEventListener(ev,e=>{if(e.target.closest('#tools,#penopts,#tbTools')||(MODE!=='select'&&e.target.closest('#stage')))setTimeout(toolsKick,0)},true));
 
 /* ===================== Mises à jour automatiques ===================== */
-const APP_V='58';let UPD_T0=Date.now(),UPD_SHOWN=false;
+const APP_V='59';let UPD_T0=Date.now(),UPD_SHOWN=false;
 async function doUpdate(){busy(true);try{await Store.flush();if('caches' in window){const ks=await caches.keys();await Promise.all(ks.map(k=>caches.delete(k)))}
   if(navigator.serviceWorker){const rs=await navigator.serviceWorker.getRegistrations();await Promise.all(rs.map(r=>r.update().catch(()=>{})))}}catch(e){}location.reload()}
 async function checkUpdate(manual){try{const r=await fetch('version.json?t='+Date.now(),{cache:'no-store'});if(!r.ok)throw 0;const v=(await r.json()).v;
