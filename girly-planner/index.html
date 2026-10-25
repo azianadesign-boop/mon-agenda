@@ -1405,6 +1405,8 @@ function sigCover(){const w=(s,cls)=>`<div class="wd">${[...s].map((c,i)=>`<span
 
 /* ---------------- Routeur & rendu ---------------- */
 let CUR=null;
+let BACK=[],NAVSRC=null;
+document.addEventListener('click',e=>{const a=e.target.closest&&e.target.closest('a[href^="#/"]');if(!a)return;NAVSRC=a.closest('.page')?'page':'other'},true);
 function upOf(sec,args){try{const a=args[0];const ymP=v=>{const [y,m]=String(v||'').split('-').map(Number);return y&&m?[y,m-1]:null};
   if(sec==='nb'&&a!==undefined&&a!=='')return ['#/nb',tr('Mes carnets')];
   if(sec==='week'){const d=CTX.date;return [`#/month/${ym(d.getFullYear(),d.getMonth())}`,MOIS[d.getMonth()]]}
@@ -1415,7 +1417,12 @@ function upOf(sec,args){try{const a=args[0];const ymP=v=>{const [y,m]=String(v||
 function route(){const h=location.hash.replace(/^#\/?/,'');if(h==='stickers'){openStk();history.replaceState(null,'',CUR?CUR.hash:'#/home');return}
   const [sec,...args]=h.split('/');const fn=ROUTES[sec]||ROUTES.home;
   let sp;try{sp=fn(...args)}catch(e){console.error(e);sp=ROUTES.home()}
-  sp.up=upOf(sec,args);sp.hash=location.hash||'#/home';if(sp.sec==='cover')sp.showR=true;CUR=sp;Store.set('last',sp.hash);
+  {const nh=location.hash||'#/home';const prev=CUR&&CUR.hash;const kk=h=>{const [s0,a0]=String(h||'').replace(/^#\/?/,'').split('/');return s0+(s0==='nb'?(a0===undefined||a0===''?':i':':p'):'')};
+   if(BACK.length&&BACK[BACK.length-1]===nh)BACK.pop();
+   else if(NAVSRC==='page'&&prev&&prev!==nh&&kk(prev)!==kk(nh))BACK.push(prev);
+   else if(NAVSRC==='other'||(NAVSRC===null&&prev&&kk(prev)!==kk(nh)))BACK=[];
+   NAVSRC=null;if(BACK.length>20)BACK=BACK.slice(-20);sp.up=BACK.length?[BACK[BACK.length-1],tr('Retour')]:null}
+  sp.hash=location.hash||'#/home';if(sp.sec==='cover')sp.showR=true;CUR=sp;Store.set('last',sp.hash);
   deselect();renderSpread();}
 function renderSpread(){setTimeout(()=>{try{syncTab()}catch(e){}},0);const sp=CUR;$('#ptitle').textContent=sp.title;document.title=tr(sp.title)+' · Girly Planner Studio';
   for(const side of ['L','R']){const el=$('#pg'+side);const def=sp[side];el.dataset.pid=def.pid;el.dataset.bare=def.bare?1:'';el.innerHTML='';
@@ -2182,7 +2189,7 @@ let TOOLT=null;function toolsKick(){clearTimeout(TOOLT);if(!document.body.classL
 ['pointerdown','input'].forEach(ev=>document.addEventListener(ev,e=>{if(e.target.closest('#tools,#penopts,#tbTools')||(MODE!=='select'&&e.target.closest('#stage')))setTimeout(toolsKick,0)},true));
 
 /* ===================== Mises à jour automatiques ===================== */
-const APP_V='69';let UPD_T0=Date.now(),UPD_SHOWN=false;
+const APP_V='70';let UPD_T0=Date.now(),UPD_SHOWN=false;
 async function doUpdate(){busy(true);try{await Store.flush();if('caches' in window){const ks=await caches.keys();await Promise.all(ks.map(k=>caches.delete(k)))}
   if(navigator.serviceWorker){const rs=await navigator.serviceWorker.getRegistrations();await Promise.all(rs.map(r=>r.update().catch(()=>{})))}}catch(e){}location.reload()}
 async function checkUpdate(manual){try{const r=await fetch('version.json?t='+Date.now(),{cache:'no-store'});if(!r.ok)throw 0;const v=(await r.json()).v;
