@@ -1077,6 +1077,9 @@ body:not(.inkmode) .ink,body:not(.inkmode) .inklive{touch-action:auto}
 #sbpop button{aspect-ratio:1;border-radius:50%;border:0;background:var(--sw);box-shadow:inset 0 0 0 1px rgba(0,0,0,.12),0 1px 3px rgba(0,0,0,.15);cursor:pointer;padding:0}
 #sbpop button.on{box-shadow:0 0 0 2px #fff,0 0 0 4px var(--deep)}
 .sbox.sb-m .sbdot{background:#8fdcb3}.sbox.sb-s .sbdot{background:#8fc3f0}.sbox.sb-y .sbdot{background:#f7d75a}.sbox.sb-k .sbdot{background:#ff8f84}.sbox.sb-b .sbdot{background:#d8c2a4}.sbox.sb-v .sbdot{background:#8f63d6}.sbox.sb-n .sbdot{background:#4a6aa8}.sbox.sb-e .sbdot{background:#2fae8f}.sbox.sb-g .sbdot{background:#7a7f8a}
+.smood{gap:7px!important}.smood span{display:flex;align-items:center;gap:9px;font:600 13.5px Quicksand,sans-serif}
+.smood .mface{width:28px;height:28px;flex:none;filter:drop-shadow(0 1px 2px rgba(0,0,0,.2))}
+.smood em{font-style:normal;min-width:52px}.smood b{font-weight:700;opacity:.85}
 </style>
 </head>
 <body>
@@ -1493,7 +1496,7 @@ stats(a){const d0=parseYM(a);const y=d0.getFullYear(),m=d0.getMonth();CTX.date=D
   const lineAll=yr.map(k=>catRate(y,k)),lineSp=yr.map(k=>catRate(y,k,CATS_RX.sport)),lineSt=yr.map(k=>catRate(y,k,CATS_RX.study));
   const ser=[[tr('Toutes mes habitudes'),lineAll,'pink']];if(lineSp.some(v=>v!=null))ser.push([tr('Sport'),lineSp,'orange']);if(lineSt.some(v=>v!=null))ser.push([tr('Études & lecture'),lineSt,'violet']);
   const F=yr.map(k=>finOf(y,k));const fm=F[m];
-  const moods=[['😄 '+tr('Super'),0,'#ffd23f'],['🙂 '+tr('Bien'),0,'#5be39a'],['😐 '+tr('Moyen'),0,'#38c6ff'],['😕 '+tr('Bof'),0,'#b388ff'],['😢 '+tr('Triste'),0,'#ff5fa2']];days.forEach(x=>{if(x.mood>=1&&x.mood<=5)moods[x.mood-1][1]++});
+  const moods=[[tr('Super'),0,'#ffd23f'],[tr('Bien'),0,'#5be39a'],[tr('Moyen'),0,'#38c6ff'],[tr('Bof'),0,'#b388ff'],[tr('Triste'),0,'#ff5fa2']];days.forEach(x=>{if(x.mood>=1&&x.mood<=5)moods[x.mood-1][1]++});
   const eur=v=>Math.round(v).toLocaleString(LANG==='en'?'en-GB':'fr-FR')+' €';
   const L=`${HD('Statistiques',`${MOIS[m]} ${y}`,nvA(p,-1),nvA(n,1))}
    <div class="sbox ${SBC(0)}" style="flex:none"><button class="sbdot noprint" data-sbc="0" style="background:${SBD(0)}!important" aria-label="${tr('Couleur du bloc')}"></button><div class="sh">${tr('Ce mois-ci')}</div><div class="srings">${sRing(all,'pink',tr('Habitudes'))}${sRing(avgW==null?null:Math.round(avgW/8*100),'blue',tr('Eau / jour'),avgW==null?'–':avgW.toFixed(1))}${sRing(avgS==null?null:Math.round(avgS*10),'violet',tr('Sommeil'),avgS==null?'–':avgS.toFixed(1)+'/10')}${sRing(tt?Math.round(100*td/tt):null,'orange',tr('Tâches faites'))}</div></div>
@@ -1551,9 +1554,12 @@ function sCols(a,b,labels,la,lb){const W=320,H=112,P=30;const max=Math.max(1,...
   labels.forEach((l,i)=>{const x=P+i*bw;const h1=(H-28)*a[i]/max,h2=(H-28)*b[i]/max;o+=`<rect x="${(x+bw*.14).toFixed(1)}" y="${(H-16-h1).toFixed(1)}" width="${(bw*.34).toFixed(1)}" height="${h1.toFixed(1)}" rx="2" fill="url(#${ia})"/><rect x="${(x+bw*.52).toFixed(1)}" y="${(H-16-h2).toFixed(1)}" width="${(bw*.34).toFixed(1)}" height="${h2.toFixed(1)}" rx="2" fill="url(#${ib})"/><text x="${(x+bw/2).toFixed(1)}" y="${H-3}" text-anchor="middle" class="ax">${l}</text>`});
   let grid='';for(let k=0;k<=3;k++){const v=max*k/3,yy=H-16-(H-28)*k/3;grid+=`<line x1="${P}" x2="${W-4}" y1="${yy}" y2="${yy}" stroke="rgba(255,255,255,.07)"/><text x="${P-4}" y="${yy+3}" text-anchor="end" class="ax">${v>=1000?(v/1000).toFixed(1)+'k':Math.round(v)}</text>`}
   return `<svg class="schart" viewBox="0 0 ${W} ${H}"><defs>${ga}${gb}</defs>${grid}${o}</svg><div class="sleg"><span><i style="background:linear-gradient(90deg,${SC.green[0]},${SC.green[1]})"></i>${la}</span><span><i style="background:linear-gradient(90deg,${SC.pink[0]},${SC.pink[1]})"></i>${lb}</span></div>`}
+const FACE=(k,col)=>{const M=['M8 14.2q4 4.6 8 0','M8.4 14.6q3.6 2.6 7.2 0','M8.6 15h6.8','M8.6 16.2q3.4-2.2 6.8 0','M8.4 16.8q3.6-3.4 7.2 0'][k];
+  const E=k===0?'<path d="M7.4 10.2q1.3-1.6 2.6 0M14 10.2q1.3-1.6 2.6 0" stroke="#3a2a3f" stroke-width="1.5" fill="none" stroke-linecap="round"/>':'<circle cx="8.9" cy="10" r="1.25" fill="#3a2a3f"/><circle cx="15.1" cy="10" r="1.25" fill="#3a2a3f"/>';
+  return `<svg class="mface" viewBox="0 0 24 24"><circle cx="12" cy="12" r="11" fill="${col}"/><circle cx="12" cy="12" r="11" fill="url(#mfg)" opacity=".35"/>${k<2?'<circle cx="6.3" cy="13.3" r="1.6" fill="#ff7fa8" opacity=".55"/><circle cx="17.7" cy="13.3" r="1.6" fill="#ff7fa8" opacity=".55"/>':''}${E}<path d="${M}" stroke="#3a2a3f" stroke-width="1.6" fill="none" stroke-linecap="round"/>${k===4?'<path d="M16.6 11.6q1 1.8 0 2.4q-1-.6 0-2.4z" fill="#7cc8ff"/>':''}</svg>`};
 function sDonut(parts){const tot=parts.reduce((a,p)=>a+p[1],0);if(!tot)return `<div class="sempty">${tr('Note ton humeur sur tes pages Jour pour voir ce graphique ♡')}</div>`;const r=36,C=2*Math.PI*r;let off=0;let arcs='';
   parts.forEach(([l,v,col])=>{if(!v)return;const len=C*v/tot;arcs+=`<circle cx="50" cy="50" r="${r}" fill="none" stroke="${col}" stroke-width="14" stroke-dasharray="${len} ${C}" stroke-dashoffset="${-off}" transform="rotate(-90 50 50)"/>`;off+=len});
-  return `<div class="sdon"><svg viewBox="0 0 100 100">${arcs}<text x="50" y="55" text-anchor="middle">${tot}</text></svg><div class="sleg col">${parts.map(([l,v,col])=>`<span><i style="background:${col}"></i>${l} · ${v?Math.round(100*v/tot)+'%':'0'}</span>`).join('')}</div></div>`}
+  return `<svg width="0" height="0" style="position:absolute"><defs><radialGradient id="mfg" cx=".35" cy=".3" r=".8"><stop offset="0" stop-color="#fff"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></radialGradient></defs></svg><div class="sdon"><svg viewBox="0 0 100 100">${arcs}<text x="50" y="55" text-anchor="middle">${tot}</text></svg><div class="sleg col smood">${parts.map(([l,v,col],k)=>`<span>${FACE(k,col)}<em>${l}</em><b>${Math.round(100*v/tot)} %</b></span>`).join('')}</div></div>`}
 
 function sigCover(){const w=(s,cls)=>`<div class="wd">${[...s].map((c,i)=>`<span class="lt ${cls[i%cls.length]}" style="transform:rotate(${[-6,4,-3,7,-5,3,-7,5][i%8]}deg)">${c}</span>`).join('')}</div>`;
   return `<div class="sig"><div class="tag">good things<br>take time</div><div class="ttl">${w('GIRLY',['b','w','p','b','w'])}${w('PLANNER',['w','b','w','b','p','b','w'])}<div class="studio">Studio</div><div class="yrs">2026 · 2027 · 2028</div></div>
@@ -2351,7 +2357,7 @@ let TOOLT=null;function toolsKick(){clearTimeout(TOOLT);if(!document.body.classL
 ['pointerdown','input'].forEach(ev=>document.addEventListener(ev,e=>{if(e.target.closest('#tools,#penopts,#tbTools')||(MODE!=='select'&&e.target.closest('#stage')))setTimeout(toolsKick,0)},true));
 
 /* ===================== Mises à jour automatiques ===================== */
-const APP_V='87';let UPD_T0=Date.now(),UPD_SHOWN=false;
+const APP_V='88';let UPD_T0=Date.now(),UPD_SHOWN=false;
 async function doUpdate(){busy(true);try{await Store.flush();if('caches' in window){const ks=await caches.keys();await Promise.all(ks.map(k=>caches.delete(k)))}
   if(navigator.serviceWorker){const rs=await navigator.serviceWorker.getRegistrations();await Promise.all(rs.map(r=>r.update().catch(()=>{})))}}catch(e){}location.reload()}
 async function checkUpdate(manual){try{const r=await fetch('version.json?t='+Date.now(),{cache:'no-store'});if(!r.ok)throw 0;const v=(await r.json()).v;
