@@ -1083,6 +1083,10 @@ body:not(.inkmode) .ink,body:not(.inkmode) .inklive{touch-action:auto}
 .navttl{outline:none;min-width:60px;max-width:62vw;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;cursor:text;border-bottom:2px dashed transparent;transition:border-color .15s}
 .navttl:empty::before{content:attr(data-ph)}.navttl:focus{border-bottom-color:var(--rose,#f4a6c0);text-overflow:clip}
 .navpen{width:17px;height:17px;stroke:var(--deep,#b0477a);fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;opacity:.6;margin:0 auto 0 6px;flex:none;align-self:center;pointer-events:none}
+#layers .lgrid{flex:1 1 auto;min-height:0;overflow-y:auto;-webkit-overflow-scrolling:touch;overscroll-behavior:contain;padding-bottom:28px}
+#layers .lgrid>*,#layers .lzone>*{flex-shrink:0}
+#layers .lzone{flex-shrink:0}
+body.phone #layers{height:84vh;max-height:calc(100vh - 70px)}
 </style>
 </head>
 <body>
@@ -2363,7 +2367,7 @@ let TOOLT=null;function toolsKick(){clearTimeout(TOOLT);if(!document.body.classL
 ['pointerdown','input'].forEach(ev=>document.addEventListener(ev,e=>{if(e.target.closest('#tools,#penopts,#tbTools')||(MODE!=='select'&&e.target.closest('#stage')))setTimeout(toolsKick,0)},true));
 
 /* ===================== Mises à jour automatiques ===================== */
-const APP_V='89';let UPD_T0=Date.now(),UPD_SHOWN=false;
+const APP_V='90';let UPD_T0=Date.now(),UPD_SHOWN=false;
 async function doUpdate(){busy(true);try{await Store.flush();if('caches' in window){const ks=await caches.keys();await Promise.all(ks.map(k=>caches.delete(k)))}
   if(navigator.serviceWorker){const rs=await navigator.serviceWorker.getRegistrations();await Promise.all(rs.map(r=>r.update().catch(()=>{})))}}catch(e){}location.reload()}
 async function checkUpdate(manual){try{const r=await fetch('version.json?t='+Date.now(),{cache:'no-store'});if(!r.ok)throw 0;const v=(await r.json()).v;
