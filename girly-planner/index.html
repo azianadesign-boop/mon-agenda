@@ -822,12 +822,12 @@ html:root[data-paper="perso"]{--paper:var(--paperc,#fff)}
 .mday.out{opacity:.3}.mday.today{box-shadow:inset 0 0 0 2px var(--ink)}
 .mday.per{background:#e2457f;color:#fff}.mday.per.f1{background:#f29bbd}.mday.per.f4{background:#b21d57}
 .mday.pred{background:repeating-linear-gradient(45deg,#fde1ec,#fde1ec 4px,#fbc8dc 4px,#fbc8dc 8px);color:#b0548f}
-.mday.fert{background:#e5f3fb;color:#2f7fb0}.mday.ovu{background:#7cc3ea;color:#fff}
+.mday.fert{background:#e3f5e6;color:#2f8a4f;position:relative}.mday.fert::after,.mday.ovu::after{content:'';position:absolute;top:1px;right:1px;width:40%;max-width:23px;aspect-ratio:1;filter:drop-shadow(0 0 1.5px #fff) drop-shadow(0 0 1px #fff);background:url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2024%2024'%3E%3Cpath%20d='M12%2022V11'%20stroke='%232f8a4f'%20stroke-width='2.2'%20stroke-linecap='round'%20fill='none'/%3E%3Cpath%20d='M12%2013C12%208%208.5%205%203.5%205.2%203.4%2010%206.8%2013.2%2012%2013z'%20fill='%2357b874'/%3E%3Cpath%20d='M12%2011c.2-4.6%203.4-7.6%208.4-7.4.1%204.8-3.2%207.8-8.4%207.4z'%20fill='%237fd08f'/%3E%3C/svg%3E") center/contain no-repeat;pointer-events:none}.mday.ovu{background:#5fbf7a;color:#fff;position:relative}
 .mday .sy{position:absolute;bottom:3px;left:50%;transform:translateX(-50%);width:5px;height:5px;border-radius:50%;background:#8a6fc9}
 .mday .mo{position:absolute;top:-4px;right:-4px;font-size:11px;font-style:normal}
 .mleg{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-top:8px;font:600 11.5px Quicksand;color:var(--ink2)}
 .mleg span{display:flex;align-items:center;gap:4px}.mleg i{width:12px;height:12px;border-radius:50%;display:block}
-.mleg .per{background:#e2457f}.mleg .pred{background:#fbc8dc}.mleg .fert{background:#cfe8f6}.mleg .ovu{background:#7cc3ea}
+.mleg .per{background:#e2457f}.mleg .pred{background:#fbc8dc}.mleg .fert{background:#bfe6c7}.mleg .ovu{background:#5fbf7a}
 .phs{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:10px}
 .phc{background:#fff;border-radius:16px;padding:10px;box-shadow:0 0 0 1px var(--tint2);display:flex;flex-direction:column;gap:3px;font:500 12px/1.35 Quicksand;color:var(--ink2)}
 .phc b{font:700 13.5px Quicksand;color:var(--ink)}.phc.on{box-shadow:0 0 0 2.5px #c45f96;background:#fdf0f6}
@@ -1378,7 +1378,7 @@ moon(a){const d0=a?parseYM(a):D(ctxYear(),ctxMonth(),1);const y=d0.getFullYear()
   const pm=m?ym(y,m-1):ym(y-1,11),nm=m<11?ym(y,m+1):ym(y+1,0);const pv=parseYM(pm),nx=parseYM(nm);
   return {title:'Moon · '+MOIS[m]+' '+y,sec:'moon',L:{pid:'moon:L',html:`${HD('Moon',MOIS[m]+' '+y,nvA(inRange(pv)?'#/moon/'+pm:'',-1),nvA(inRange(nx)?'#/moon/'+nm:'',1))}
    <div class="moonstat"></div><div class="box" style="--c:#f6d6e4;flex:none;padding:8px 10px"><div class="mcalm" data-ym="${ym(y,m)}"></div>
-   <div class="mleg"><span><i class="per"></i>${tr('Règles')}</span><span><i class="pred"></i>${tr('Prévues')}</span><span class="lf"><i class="fert"></i>${tr('Fertile')}</span><span class="lf"><i class="ovu"></i>${tr('Ovulation')}</span></div></div>
+   <div class="mleg"><span><i class="per"></i>${tr('Règles')}</span><span><i class="pred"></i>${tr('Prévues')}</span><span class="lf"><i class="fert"></i>${tr('Fertile')} 🌱</span><span class="lf"><i class="ovu"></i>${tr('Ovulation')}</span></div></div>
    <p class="mut" style="margin:8px 4px 0;font-size:13px">${tr('Touche un jour pour noter tes règles, tes symptômes et ton humeur.')}</p>`},
    R:{pid:'moon:R',html:`${HD('Mon cycle','')}<div class="moonph"></div><div class="moonstats"></div><div class="moonset"></div>
    <p class="mut moonwarn">${tr('Moon donne des estimations à titre indicatif. Ce n’est pas une méthode de contraception ni un avis médical.')}</p>`}}},
@@ -2198,7 +2198,7 @@ let TOOLT=null;function toolsKick(){clearTimeout(TOOLT);if(!document.body.classL
 ['pointerdown','input'].forEach(ev=>document.addEventListener(ev,e=>{if(e.target.closest('#tools,#penopts,#tbTools')||(MODE!=='select'&&e.target.closest('#stage')))setTimeout(toolsKick,0)},true));
 
 /* ===================== Mises à jour automatiques ===================== */
-const APP_V='71';let UPD_T0=Date.now(),UPD_SHOWN=false;
+const APP_V='73';let UPD_T0=Date.now(),UPD_SHOWN=false;
 async function doUpdate(){busy(true);try{await Store.flush();if('caches' in window){const ks=await caches.keys();await Promise.all(ks.map(k=>caches.delete(k)))}
   if(navigator.serviceWorker){const rs=await navigator.serviceWorker.getRegistrations();await Promise.all(rs.map(r=>r.update().catch(()=>{})))}}catch(e){}location.reload()}
 async function checkUpdate(manual){try{const r=await fetch('version.json?t='+Date.now(),{cache:'no-store'});if(!r.ok)throw 0;const v=(await r.json()).v;
